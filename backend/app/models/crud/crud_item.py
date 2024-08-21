@@ -27,6 +27,34 @@ def read_item_by_id(db,id):
         db.rollback()  # Rollback on error
         print(f"An error occurred: {e}")
         return DbOpStatus.FAIL, str(e)
+    
+def read_item_by_sex(db, sex): 
+    try:
+        query_result = db.query(Item).filter_by(sex=sex).all()
+        total_res = []
+        for data_obj in query_result:
+            res = data_obj.__dict__
+            total_res.append(res)
+        return DbOpStatus.SUCCESS, total_res
+
+    except Exception as e:
+        db.rollback()  # Rollback on error
+        print(f"An error occurred: {e}")
+        return DbOpStatus.FAIL, str(e)
+
+def read_item_by_sex_and_cloth_type(db, sex, cloth_type): 
+    try:
+        query_result = db.query(Item).filter_by(sex=sex, cloth_type=cloth_type).all()
+        total_res = []
+        for data_obj in query_result:
+            res = data_obj.__dict__
+            total_res.append(res)
+        return DbOpStatus.SUCCESS, total_res
+
+    except Exception as e:
+        db.rollback()  # Rollback on error
+        print(f"An error occurred: {e}")
+        return DbOpStatus.FAIL, str(e)
 
 def delete_item(db, id):
     try:

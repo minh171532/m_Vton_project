@@ -20,6 +20,9 @@ TIME_STR = "%Y-%m-%d %H:%M:%S.%f" #[:-3]
 STORAGE_DIR = os.getenv('STORAGE_DIR')
 STORAGE_DIR = STORAGE_DIR if STORAGE_DIR else os.path.join(os.path.dirname(PYTHON_PATH), "STORAGE")
 os.makedirs(STORAGE_DIR, exist_ok=True)
+# user admin 
+USERNAME=os.getenv('USERNAME')
+EMAIL=os.getenv('EMAIL')
 
 # log dir
 LOG_DIR = os.path.join(STORAGE_DIR, "LOG")
@@ -33,3 +36,27 @@ os.makedirs(STATIC_DIR, exist_ok=True)
 # setting dir
 SETTING_DIR = os.path.join(STATIC_DIR, "settings")
 os.makedirs(SETTING_DIR, exist_ok=True)
+
+
+# database dir
+DATABASE_DIR = os.path.join(STORAGE_DIR, "DATABASE")
+os.makedirs(DATABASE_DIR, exist_ok=True)
+
+
+# item dir
+ITEM_DIR = os.getenv('ITEM_DIR')
+ITEM_DIR = ITEM_DIR if ITEM_DIR else os.path.join(STORAGE_DIR, "ITEM")
+os.makedirs(ITEM_DIR, exist_ok=True)
+
+# inference dir
+INFERENCE_DIR = os.getenv('INFERENCE_DIR')
+INFERENCE_DIR = INFERENCE_DIR if INFERENCE_DIR else os.path.join(STORAGE_DIR, "INFERENCE")
+os.makedirs(INFERENCE_DIR, exist_ok=True)
+
+INFERENCE_IN_DIR = os.getenv('INFERENCE_IN_DIR')
+INFERENCE_IN_DIR = INFERENCE_IN_DIR if INFERENCE_IN_DIR else os.path.join(INFERENCE_DIR, "INPUT")
+os.makedirs(INFERENCE_IN_DIR, exist_ok=True)
+
+INFERENCE_OUT_DIR =  os.getenv('INFERENCE_OUT_DIR')
+INFERENCE_OUT_DIR = INFERENCE_OUT_DIR if INFERENCE_OUT_DIR else os.path.join(INFERENCE_DIR, "OUTPUT")
+os.makedirs(INFERENCE_OUT_DIR, exist_ok=True)

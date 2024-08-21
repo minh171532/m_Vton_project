@@ -50,7 +50,6 @@ def read_users_items_by_user_id(db, user_id):
         total_res = []
         for data_obj in query_result:
             res = data_obj.__dict__
-            res[ITEM_IMAGE_DIR_KEY] = ITEM_IMAGE_DIR_KEY
             total_res.append(res)
         return DbOpStatus.SUCCESS, total_res
 
