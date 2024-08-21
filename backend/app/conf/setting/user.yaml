@@ -1,0 +1,5 @@
+log_level: "INFO"
+
+training_cluster_threshold: 3
+
+inference_max_images: 1000
