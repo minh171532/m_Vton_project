@@ -2,7 +2,8 @@ from database import engine
 from models import base 
 
 # Create all tables
-# base.Base.metadata.drop_all(bind=engine)  # use for delete all table
+base.Base.metadata.drop_all(bind=engine)  # use for delete all table
+
 base.Base.metadata.create_all(bind=engine)
 
 # ===============
@@ -47,8 +48,8 @@ for sexFolder in sexFolders:
             item = Item(
                 sex=sexFolder,
                 cloth_type=clothType,
-                image_dir=os.path.join(clothType_dir, item_img),
-                mask_dir=os.path.join(clothType_dir, item_img),
+                image_dir=os.path.join(sexFolder, clothType, item_img),
+                mask_dir=os.path.join(sexFolder, clothType, item_img),
             )
             ret_code, created_item = crud.create_item(db=db, item=item)
             print(ret_code)

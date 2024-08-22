@@ -33,8 +33,12 @@ export const getProductsInCategories = createAsyncThunk(
    }
 );
 
+// export const getItems = createAsyncThunk("products/fetch", async () => {
+//    const { data } = await axios.get("/products");
+//    return data;
+// });
 export const getItems = createAsyncThunk("products/fetch", async () => {
-   const { data } = await axios.get("/products");
+   const { data } = await axios.get("http://192.168.0.105:5111/api/item/sex/FEMALE");
    return data;
 });
 

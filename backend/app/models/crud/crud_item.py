@@ -1,5 +1,9 @@
+import base64
+
+from fastapi.responses import FileResponse
 from models.item import Item
 from models.enums import DbOpStatus
+from models.crud.const import ITEM_IMAGE_DIR_KEY
 
 def create_item(db, item: Item):
     try:
@@ -34,7 +38,15 @@ def read_item_by_sex(db, sex):
         total_res = []
         for data_obj in query_result:
             res = data_obj.__dict__
-            total_res.append(res)
+            res_ = dict()
+            res_["_id"] = res["id"]
+            res_["title"] = "abc"
+            res_["price"] = 22
+            res_["description"] = "abcdef"
+            res_["category"] = res["cloth_type"]
+            res_["image"] = f"http://192.168.0.105:5111/images/{res[ITEM_IMAGE_DIR_KEY]}"
+            res_["__v"] = 0 
+            total_res.append(res_)
         return DbOpStatus.SUCCESS, total_res
 
     except Exception as e:

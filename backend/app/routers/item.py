@@ -24,16 +24,16 @@ def read_one_item(id: int) -> Response:
     LOGGER.info("Response: response={}".format(response))
     return handle_result(response)
 
-@router.get("/sex")
+@router.get("/sex/{sex}")
 def read_item_by_sex(sex: Sex) -> Response:
-    LOGGER.info(f"Request get item by id: {id}")
+    LOGGER.info(f"Request get item by sex")
     response = core.read_item_by_sex(sex)
     LOGGER.info("Response: response={}".format(response))
     return handle_result(response)
 
-@router.get("/sex/cloth_type")
+@router.get("/{sex}/{cloth_type}")
 def read_item_by_sex_cloth_type(sex:Sex, cloth_type: ClothType) -> Response:
-    LOGGER.info(f"Request get item by id: {id}")
+    LOGGER.info(f"Request get item by sex and cloth type")
     response = core.read_item_by_sex_and_cloth_type(sex, cloth_type)
     LOGGER.info("Response: response={}".format(response))
     return handle_result(response)

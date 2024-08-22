@@ -7,7 +7,7 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.staticfiles import StaticFiles
 from starlette.responses import FileResponse
 
-from config import APP_PATH, LOGGER
+from config import APP_PATH, LOGGER, CONFIG
 # from app.routers import setting, authen, user, item
 # from app.routers import authen, user, item
 from app.routers import user, item
@@ -32,6 +32,7 @@ app.add_middleware(
 # Set statics
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
 app.mount("/assets", StaticFiles(directory="app/static/reactjs/assets/"), name="assets")
+app.mount("/images", StaticFiles(directory=CONFIG.ITEM_DIR), name="images")
 
 
 @app.exception_handler(HTTPException)
