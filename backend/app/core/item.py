@@ -19,8 +19,6 @@ def read_items():
         status, data = crud.read_all_items(db)
         if status == DbOpStatus.SUCCESS:
             # convert data to send image 
-            print("#"*20)
-            print(type(data[0]))
             return ServiceResult(data)
         else:
             LOGGER.error("DB Exception: {}".format(data))
