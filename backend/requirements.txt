@@ -1,0 +1,8 @@
+uvicon 
+fastapi 
+ruamel.yaml
+easydict
+loguru
+psycopg2
+SQLAlchemy
+SQLAlchemy-Utils

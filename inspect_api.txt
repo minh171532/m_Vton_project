@@ -1,0 +1,24 @@
+================= appSlice =================
+getItems oke 
+https://bitter-hill-3387.fly.dev/api/products
+=> create api 
+
+get Single item by id
+https://bitter-hill-3387.fly.dev/api/products/single/61edbd06d7b94a62e25c6d31
+=> create api 
+
+searchBarFunction
+https://bitter-hill-3387.fly.dev/api/products/search/${input}
+
+getCategories oke 
+https://bitter-hill-3387.fly.dev/api/products/categories
+=> hard code in UI 
+
+getProductsInCategories
+https://bitter-hill-3387.fly.dev/api
+=> create api
+
+================== ===================
+addToCart
+================== ===================
+* api for get product in category 

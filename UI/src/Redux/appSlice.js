@@ -7,9 +7,11 @@ export const searchBarFunction = createAsyncThunk(
    async (input) => {
       if (input.length < 1) {
          const { data } = await axios.get("/products");
+         console.log("searchBarFunction : ",data )
          return data;
       }
       const { data } = await axios.get(`/products/search/${input}`);
+      console.log("searchBarFunction input : ",data )
       return data;
    }
 );
@@ -38,18 +40,24 @@ export const getProductsInCategories = createAsyncThunk(
 //    return data;
 // });
 export const getItems = createAsyncThunk("products/fetch", async () => {
-   const { data } = await axios.get("http://192.168.0.105:5111/api/item/sex/FEMALE");
+   const { data } = await axios.get("http://192.168.5.80:5111/api/item");
    return data;
 });
 
+// export const getSingleItem = createAsyncThunk(
+//    "products/getSingleItem",
+//    async (id) => {
+//       const { data } = await axios.get(`/products/single/${id}`);
+//       return data;
+//    }
+// );
 export const getSingleItem = createAsyncThunk(
    "products/getSingleItem",
    async (id) => {
-      const { data } = await axios.get(`/products/single/${id}`);
+      const { data } = await axios.get(`http://192.168.5.80:5111/api/item/${id}`);
       return data;
    }
 );
-
 export const appSlice = createSlice({
    name: "app",
    initialState: {

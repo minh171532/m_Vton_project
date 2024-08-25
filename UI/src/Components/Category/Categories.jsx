@@ -3,6 +3,14 @@ import { Button, Grid, makeStyles } from "@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
 import { getProductsInCategories } from "../../Redux/appSlice";
 
+const categories = [
+   "All",
+   "men's clothing",
+   "jewelery",
+   "electronics",
+   "women's clothing"
+]
+
 const useStyles = makeStyles((theme) => ({
    container: {
       justifyContent: "center",
@@ -19,9 +27,11 @@ const useStyles = makeStyles((theme) => ({
    },
 }));
 
+
+
 const Categories = () => {
    const classes = useStyles();
-   const { categories } = useSelector((state) => state.app);
+   // const { categories } = useSelector((state) => state.app);
    const dispatch = useDispatch();
 
    return (

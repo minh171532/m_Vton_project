@@ -7,6 +7,7 @@ import {
    Button,
    alpha,
    Chip,
+   Box,
 } from "@material-ui/core";
 import classNames from "classnames";
 import { addToCart } from "../../Redux/cartSlice";
@@ -15,22 +16,33 @@ import ItemList from "../ItemList/ItemList";
 
 const useStyles = makeStyles((theme) => ({
    container: {
+      display: "flex",
       padding: theme.spacing(4),
       justifyContent: "space-around",
-      height: "auto",
+      // height: "auto",
+      height: "100%",
       alignItems: "center",
       [theme.breakpoints.up("md")]: {
          padding: theme.spacing(10),
       },
    },
    imgContainer: {
-      width: "100%",
-      height: "auto",
+      width: "300px",
+      height: "400px",
+      // width: "100%",
+      // height: "100%",
+      // height: "400px",
+      
       boxShadow: theme.shadows[3],
+      p: 2, border: '1px solid grey',
    },
    img: {
-      width: "100%",
-      height: "auto",
+      width: "300px",
+      height: "400px",
+      // width: "100%",
+      // height:"100%",
+      objectFit: "contain"
+      // height: "auto",
    },
    marginTopTwo: {
       marginTop: theme.spacing(2),
@@ -83,6 +95,12 @@ const SingleProduct = () => {
                <img src={image} alt={title} className={classes.img} />
             </div>
          </Grid>
+         <Grid item xs={12} sm={4}>
+            <div className={classes.imgContainer}>
+               <Box sx={{ width: "300px", height: "400px" }} />
+            </div>
+         </Grid> 
+{/* 
          <Grid item xs={12} sm={6}>
             <Typography className={classes.marginTopTwo} variant="h4">
                {title}
@@ -112,8 +130,9 @@ const SingleProduct = () => {
                onClick={handleClick}
             >
                Add to Cart
-            </Button>
-         </Grid>
+            </Button> 
+         </Grid>   */}
+
       </Grid>
       <ItemList />
 

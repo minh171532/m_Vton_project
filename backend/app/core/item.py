@@ -32,8 +32,7 @@ def read_item_by_id(id: int):
     try:
         status, data = crud.read_item_by_id(db, id)
         if status == DbOpStatus.SUCCESS:
-            data_dict = data.__dict__
-            return ServiceResult(data_dict)
+            return ServiceResult(data)
         else:
             LOGGER.error("DB Exception: {}".format(data))
             return ServiceResult(AppExceptionCase(status_code=http_status.HTTP_500_INTERNAL_SERVER_ERROR, context=data))
