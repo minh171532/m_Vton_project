@@ -8,11 +8,14 @@ import {
    alpha,
    Chip,
    Box,
+   Container,
 } from "@material-ui/core";
 import classNames from "classnames";
 import { addToCart } from "../../Redux/cartSlice";
 import { openSnackBar } from "../../Redux/appSlice";
 import ItemList from "../ItemList/ItemList";
+import DrawBox from "../DrawBox/DrawBox";
+import Upload from "../DropImageBox/DropImageBox";
 
 const useStyles = makeStyles((theme) => ({
    container: {
@@ -59,6 +62,10 @@ const SingleProduct = () => {
    const { singleItem } = useSelector((state) => state.app);
    const { pending, error } = useSelector((state) => state.cart);
    const user = useSelector((state) => state.user.user);
+   
+   // 
+   const [selectedImage, setSelectedImage] = React.useState(null);
+   function handlesetSelectedImageState(filePath) { setSelectedImage(filePath);}
 
    const classes = useStyles();
    const { title, price, description, category, image, _id } = singleItem;
@@ -97,7 +104,31 @@ const SingleProduct = () => {
          </Grid>
          <Grid item xs={12} sm={4}>
             <div className={classes.imgContainer}>
-               <Box sx={{ width: "300px", height: "400px" }} />
+               {selectedImage ? (
+                  <Box     
+                     width={300}
+                     height={400}
+                     sx={{
+                     backgroundImage: `url(${URL.createObjectURL(selectedImage)})`,
+                     backgroundSize: 'contain',
+                     backgroundRepeat: 'no-repeat',
+                     backgroundPosition: 'center',
+                     // Other styles
+                     }}
+                   >
+                     <DrawBox /> 
+                   </ Box>  
+                  
+                  // <img
+                  //    src={URL.createObjectURL(selectedImage)}
+                  //    className={classes.img}
+                  //    alt="Preview"
+                     
+                  // />
+
+                  ) : (
+                     <Upload change = {handlesetSelectedImageState}/>
+               )}
             </div>
          </Grid> 
 {/* 

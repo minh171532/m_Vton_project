@@ -28,7 +28,7 @@ def read_all_items(db):
             res_["price"] = 22
             res_["description"] = "abcdef"
             res_["category"] = res["cloth_type"]
-            res_["image"] = f"http://192.168.5.80:5111/images/{res[ITEM_IMAGE_DIR_KEY]}"
+            res_["image"] = f"http://192.168.0.105:5111/images/{res[ITEM_IMAGE_DIR_KEY]}"
             res_["__v"] = 0 
             total_res.append(res_)
         return DbOpStatus.SUCCESS, total_res
@@ -47,7 +47,7 @@ def read_item_by_id(db,id):
         res_["price"] = 22
         res_["description"] = "abcdef"
         res_["category"] = res["cloth_type"]
-        res_["image"] = f"http://192.168.5.80:5111/images/{res[ITEM_IMAGE_DIR_KEY]}"
+        res_["image"] = f"http://192.168.0.105:5111/images/{res[ITEM_IMAGE_DIR_KEY]}"
         res_["__v"] = 0 
 
         return DbOpStatus.SUCCESS, res_
@@ -68,7 +68,7 @@ def read_item_by_sex(db, sex):
             res_["price"] = 22
             res_["description"] = "abcdef"
             res_["category"] = res["cloth_type"]
-            res_["image"] = f"http://192.168.5.80:5111/images/{res[ITEM_IMAGE_DIR_KEY]}"
+            res_["image"] = f"http://192.168.0.105:5111/images/{res[ITEM_IMAGE_DIR_KEY]}"
             res_["__v"] = 0 
             total_res.append(res_)
         return DbOpStatus.SUCCESS, total_res
