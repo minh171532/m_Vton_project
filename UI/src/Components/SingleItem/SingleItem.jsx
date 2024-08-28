@@ -7,6 +7,7 @@ import {
    Typography,
    CardActionArea,
    CardContent,
+   Avatar,
 } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
 
@@ -27,7 +28,9 @@ const useStyles = makeStyles((theme) => ({
 
 const SingleItem = ({ item }) => {
    const classes = useStyles();
-   const { _id, title, image, price } = item;
+   const { _id, title, colors, price } = item;
+   const images = Object.values(colors);
+
    const navigate = useNavigate();
    return (
       <Grid item xs={10} sm={6} lg={3}>
@@ -35,7 +38,7 @@ const SingleItem = ({ item }) => {
             <CardActionArea onClick={() => navigate(`/products/${_id}`)}>
                <CardMedia
                   className={classes.media}
-                  src={image}
+                  src={images[0]}
                   title={title}
                   component="img"
                   loading="lazy"
@@ -52,6 +55,15 @@ const SingleItem = ({ item }) => {
                      ${price}
                   </Typography>
                </CardContent>
+
+               <Grid container justifyContent="center" spacing={2}>
+                  {images.map((image_, index) => (
+                     <Grid key={index} item>
+                        <Avatar alt="img.." src={image_} variant="square" />
+                     </Grid>
+                  ))}
+               </Grid>
+
             </CardActionArea>
          </Card>
       </Grid>

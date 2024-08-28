@@ -1,9 +1,8 @@
 import base64
-
 from fastapi.responses import FileResponse
 from models.item import Item
 from models.enums import DbOpStatus
-from models.crud.const import ITEM_IMAGE_DIR_KEY
+
 
 def create_item(db, item: Item):
     try:
@@ -19,19 +18,7 @@ def create_item(db, item: Item):
 def read_all_items(db):
     try:
         query_result = db.query(Item).all()
-        total_res = []
-        for data_obj in query_result:
-            res = data_obj.__dict__
-            res_ = dict()
-            res_["_id"] = res["id"]
-            res_["title"] = "abc"
-            res_["price"] = 22
-            res_["description"] = "abcdef"
-            res_["category"] = res["cloth_type"]
-            res_["image"] = f"http://192.168.0.105:5111/images/{res[ITEM_IMAGE_DIR_KEY]}"
-            res_["__v"] = 0 
-            total_res.append(res_)
-        return DbOpStatus.SUCCESS, total_res
+        return DbOpStatus.SUCCESS, query_result
     except Exception as e:
         db.rollback()  # Rollback on error
         print(f"An error occurred: {e}")
@@ -40,17 +27,7 @@ def read_all_items(db):
 def read_item_by_id(db,id):
     try:
         query_result = db.query(Item).filter_by(id=id).first()
-        res = query_result.__dict__ 
-        res_ = {}
-        res_["_id"] = res["id"]
-        res_["title"] = "abc"
-        res_["price"] = 22
-        res_["description"] = "abcdef"
-        res_["category"] = res["cloth_type"]
-        res_["image"] = f"http://192.168.0.105:5111/images/{res[ITEM_IMAGE_DIR_KEY]}"
-        res_["__v"] = 0 
-
-        return DbOpStatus.SUCCESS, res_
+        return DbOpStatus.SUCCESS, query_result
     except Exception as e:
         db.rollback()  # Rollback on error
         print(f"An error occurred: {e}")
@@ -59,33 +36,16 @@ def read_item_by_id(db,id):
 def read_item_by_sex(db, sex): 
     try:
         query_result = db.query(Item).filter_by(sex=sex).all()
-        total_res = []
-        for data_obj in query_result:
-            res = data_obj.__dict__
-            res_ = dict()
-            res_["_id"] = res["id"]
-            res_["title"] = "abc"
-            res_["price"] = 22
-            res_["description"] = "abcdef"
-            res_["category"] = res["cloth_type"]
-            res_["image"] = f"http://192.168.0.105:5111/images/{res[ITEM_IMAGE_DIR_KEY]}"
-            res_["__v"] = 0 
-            total_res.append(res_)
-        return DbOpStatus.SUCCESS, total_res
-
+        return DbOpStatus.SUCCESS, query_result
     except Exception as e:
         db.rollback()  # Rollback on error
         print(f"An error occurred: {e}")
         return DbOpStatus.FAIL, str(e)
 
-def read_item_by_sex_and_cloth_type(db, sex, cloth_type): 
+def read_item_by_sex_and_category(db, sex, category): 
     try:
-        query_result = db.query(Item).filter_by(sex=sex, cloth_type=cloth_type).all()
-        total_res = []
-        for data_obj in query_result:
-            res = data_obj.__dict__
-            total_res.append(res)
-        return DbOpStatus.SUCCESS, total_res
+        query_result = db.query(Item).filter_by(sex=sex, category=category).all()
+        return DbOpStatus.SUCCESS, query_result
 
     except Exception as e:
         db.rollback()  # Rollback on error

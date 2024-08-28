@@ -1,6 +1,6 @@
 from enum import Enum 
 
-class ClothType(Enum):
+class Category(Enum):
     AO_NI = "AO_NI"
     AO_LEN = "AO_LEN"
     AO_GILE = "AO_GILE"

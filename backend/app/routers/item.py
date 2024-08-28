@@ -4,7 +4,7 @@ from starlette.responses import Response
 from config import LOGGER
 from app.utils.service_result import handle_result
 from app.core import item as core
-from app.pydantic_models import ItemPydantic, Sex , ClothType  
+from app.pydantic_models import ItemPydantic, Sex , Category
 
 
 router = APIRouter(prefix="/api/item", tags=["/api/item"])
@@ -31,10 +31,10 @@ def read_item_by_sex(sex: Sex) -> Response:
     LOGGER.info("Response: response={}".format(response))
     return handle_result(response)
 
-@router.get("/{sex}/{cloth_type}")
-def read_item_by_sex_cloth_type(sex:Sex, cloth_type: ClothType) -> Response:
+@router.get("/{sex}/{category}")
+def read_item_by_sex_and_category(sex:Sex, category: Category) -> Response:
     LOGGER.info(f"Request get item by sex and cloth type")
-    response = core.read_item_by_sex_and_cloth_type(sex, cloth_type)
+    response = core.read_item_by_sex_and_category(sex, category)
     LOGGER.info("Response: response={}".format(response))
     return handle_result(response)
 
