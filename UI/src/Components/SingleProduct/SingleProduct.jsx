@@ -13,9 +13,12 @@ import {
 import classNames from "classnames";
 import { addToCart } from "../../Redux/cartSlice";
 import { openSnackBar } from "../../Redux/appSlice";
+
 import ItemList from "../ItemList/ItemList";
 import DrawBox from "../DrawBox/DrawBox";
 import Upload from "../DropImageBox/DropImageBox";
+
+import CarouselBox from "../CarouselBox/CarouselBox";
 
 const useStyles = makeStyles((theme) => ({
    container: {
@@ -62,13 +65,17 @@ const SingleProduct = () => {
    const { singleItem } = useSelector((state) => state.app);
    const { pending, error } = useSelector((state) => state.cart);
    const user = useSelector((state) => state.user.user);
-   
-   // 
+    
    const [selectedImage, setSelectedImage] = React.useState(null);
    function handlesetSelectedImageState(filePath) { setSelectedImage(filePath);}
 
    const classes = useStyles();
-   const { title, price, description, category, image, _id } = singleItem;
+   // TODO 
+   // const { _id, title, price, description, category, colors  } = singleItem;
+   const { title, price, description, category, colors, _id  } = singleItem;
+   // (=> must change Object.values => Object.entries)
+   const imageList = Object.values(colors)[0]
+
    const dispatch = useDispatch();
 
    const handleClick = () => {
@@ -98,8 +105,13 @@ const SingleProduct = () => {
       <>
       <Grid container className={classes.container}>
          <Grid item xs={12} sm={4}>
-            <div className={classes.imgContainer}>
+
+
+            {/* <div className={classes.imgContainer}>
                <img src={image} alt={title} className={classes.img} />
+            </div> */}
+            <div className={classes.imgContainer}>
+               <CarouselBox imageList={imageList}/>
             </div>
          </Grid>
          <Grid item xs={12} sm={4}>
@@ -118,13 +130,6 @@ const SingleProduct = () => {
                    >
                      <DrawBox /> 
                    </ Box>  
-                  
-                  // <img
-                  //    src={URL.createObjectURL(selectedImage)}
-                  //    className={classes.img}
-                  //    alt="Preview"
-                     
-                  // />
 
                   ) : (
                      <Upload change = {handlesetSelectedImageState}/>

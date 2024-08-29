@@ -20,16 +20,19 @@ const useStyles = makeStyles((theme) => ({
 
 const SingleProductPage = () => {
    const { id } = useParams();
-   const { pending } = useSelector((state) => state.app);
+   const { pending, singleItem } = useSelector((state) => state.app);
    const classes = useStyles();
 
    const dispatch = useDispatch();
+   // dispatch(getSingleItem(id));
    useEffect(() => {
       dispatch(getSingleItem(id));
    }, [id, dispatch]);
+
+
    return (
       <>
-         {!pending ? (
+         {(!pending && Object.keys(singleItem).length !== 0)? (
             <SingleProduct />
          ) : (
             <Grid className={classes.container} container>

@@ -28,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
 
 const SingleItem = ({ item }) => {
    const classes = useStyles();
+   // ===========================
    const { _id, title, colors, price } = item;
    const images = Object.values(colors);
 
@@ -59,7 +60,7 @@ const SingleItem = ({ item }) => {
                <Grid container justifyContent="center" spacing={2}>
                   {images.map((image_, index) => (
                      <Grid key={index} item>
-                        <Avatar alt="img.." src={image_} variant="square" />
+                        <Avatar alt="img.." src={image_} variant="rounded" />
                      </Grid>
                   ))}
                </Grid>
