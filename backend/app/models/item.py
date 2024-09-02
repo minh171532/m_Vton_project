@@ -18,4 +18,8 @@ class Item(Base):
 
     image_folder_dir = Column(String, nullable=False, unique=True)
 
-    fk_item = relationship("UserItem", backref="items", cascade="all, delete")
+    created_at = Column(DateTime, server_default=func.now())
+    updated_at = Column(DateTime, server_default=func.now(), onupdate=func.current_timestamp())
+
+    fk_carts = relationship("Cart", backref="items", cascade="all, delete")
+    

@@ -62,4 +62,21 @@ for sexFolder in sexFolders:
                 image_folder_dir=os.path.join(sexFolder, clothType, item_img),
             )
             ret_code, created_item = crud.create_item(db=db, item=item)
-            print(ret_code)
+            print("add item into database", ret_code)
+            # ============================
+            # Add item_store into item database 
+            # ============================
+            colors = os.listdir(item_img_dir)
+            for color in colors: 
+                item_store = ItemStore(
+                    image_folder_dir=os.path.join(sexFolder, clothType, item_img),
+                    color=color,
+                    s_no=10, 
+                    m_no=10,
+                    l_no=10,
+                    xl_no=10,
+                    xxl_no=10
+                )
+                ret_code, created_item = crud.create_item_store(db=db, item_store=item_store )
+                print("add item store into database", ret_code)
+                print("item_store", created_item.__dict__)

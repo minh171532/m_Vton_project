@@ -28,4 +28,5 @@ class User(Base):
     created_at = Column(DateTime, server_default=func.now())
     updated_at = Column(DateTime, server_default=func.now(), onupdate=func.current_timestamp())
 
-    fk_user = relationship("UserItem", backref="users", cascade="all, delete")
+    fk_carts = relationship("Cart", backref="users", cascade="all, delete")
+    fk_vton = relationship("Vton", backref="users", cascade="all, delete")

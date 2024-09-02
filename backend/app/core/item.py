@@ -56,9 +56,23 @@ def read_items():
 
 
 def read_item_by_id(id: int):
+    """
+        colors = {
+            red : {
+                image_list: [],
+                s_no: int,
+                m_no: int,
+                l_no: int,
+                xl_no: int,
+                xxl_no: int
+            },
+            blu : {}
+        }
+    """
     try:
         status, query_result = crud.read_item_by_id(db, id)
         if status == DbOpStatus.SUCCESS:
+
             res = query_result.__dict__ 
             res_ = {}
             res_["_id"] = res["id"]
@@ -67,16 +81,28 @@ def read_item_by_id(id: int):
             res_["description"] = res["description"]
             res_["category"] = res["category"]
 
+            _, query_itemstore_list = crud.read_item_store_by_image_folder_dir(db,
+                                                                          image_folder_dir=res_["image_folder_dir"])
+            # ===================
             res_["colors"] = {}
             item_dir = os.path.join(items_path, res[ITEM_IMAGE_DIR_KEY])
-            colors = os.listdir(item_dir)
-            
-            for color in colors: 
+            for query_itemstore in query_itemstore_list: 
+                query_itemstore = query_itemstore.__dict__ 
+                color = query_itemstore["color"]
+
+                res_["colors"][color] = {}
+                res_["colors"][color]["s_no"] = query_itemstore["s_no"]
+                res_["colors"][color]["m_no"] = query_itemstore["m_no"]
+                res_["colors"][color]["l_no"] = query_itemstore["l_no"]
+                res_["colors"][color]["xl_no"] = query_itemstore["xl_no"]
+                res_["colors"][color]["xxl_no"] = query_itemstore["xxl_no"]
+                res_["colors"][color]["image_list"] = []
+
                 color_dir = os.path.join(item_dir, color)
                 img_names = os.listdir(color_dir)
-                res_["colors"][color] = []
+
                 for img_name in img_names: 
-                    res_["colors"][color].append(os.path.join("http://192.168.0.105:5111/images/",
+                    res_["colors"][color]["image_list"] .append(os.path.join("http://192.168.0.105:5111/images/",
                                                             res[ITEM_IMAGE_DIR_KEY], color, img_name))
             res_["__v"] = 0 
 

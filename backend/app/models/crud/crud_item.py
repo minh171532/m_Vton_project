@@ -1,6 +1,7 @@
 import base64
 from fastapi.responses import FileResponse
 from models.item import Item
+from models.item_store import ItemStore
 from models.enums import DbOpStatus
 
 
@@ -24,15 +25,30 @@ def read_all_items(db):
         print(f"An error occurred: {e}")
         return DbOpStatus.FAIL, str(e)
 
+# def read_item_by_id(db,id):
+#     try:
+#         query_result = db.query(Item).filter_by(id=id).first()
+#         return DbOpStatus.SUCCESS, query_result
+#     except Exception as e:
+#         db.rollback()  # Rollback on error
+#         print(f"An error occurred: {e}")
+#         return DbOpStatus.FAIL, str(e)
+    
 def read_item_by_id(db,id):
+    """
+        TODO 
+    """
     try:
         query_result = db.query(Item).filter_by(id=id).first()
+        query_item = query_item.__dict__
         return DbOpStatus.SUCCESS, query_result
     except Exception as e:
         db.rollback()  # Rollback on error
         print(f"An error occurred: {e}")
         return DbOpStatus.FAIL, str(e)
-    
+
+
+
 def read_item_by_sex(db, sex): 
     try:
         query_result = db.query(Item).filter_by(sex=sex).all()
