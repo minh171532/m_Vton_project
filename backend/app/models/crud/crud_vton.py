@@ -1,7 +1,4 @@
 import traceback
-from models.cart import Cart
-from models.user import User
-from models.item import Item
 from models.vton import Vton
 from models.enums import DbOpStatus
 from models.crud.const import USERNAME_KEY, EMAIL_KEY, ITEM_IMAGE_DIR_KEY

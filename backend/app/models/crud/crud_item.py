@@ -40,7 +40,7 @@ def read_item_by_id(db,id):
     """
     try:
         query_result = db.query(Item).filter_by(id=id).first()
-        query_item = query_item.__dict__
+        # query_item = query_item.__dict__
         return DbOpStatus.SUCCESS, query_result
     except Exception as e:
         db.rollback()  # Rollback on error

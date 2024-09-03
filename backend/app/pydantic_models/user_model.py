@@ -11,3 +11,7 @@ class UserPydantic(BaseModel, use_enum_values=True):
     role: UserRoles
     setting_path: str
     description: Optional[str] = None
+
+class UserLogin(BaseModel):
+    username: str
+    password: str

@@ -17,6 +17,21 @@ items_path = CONFIG.ITEM_DIR
 
 
 def read_items():
+    """
+        total_res = [{
+                    _id : int,
+                    title: srt,
+                    price: float, 
+                    description: str, 
+                    category: str
+                    colors = {
+                        red_dir : 
+                        blu_dir : 
+            }
+        },
+        {}
+        ]
+    """
     try:
         status, query_result = crud.read_all_items(db)
         if status == DbOpStatus.SUCCESS:
@@ -35,6 +50,7 @@ def read_items():
                 item_dir = os.path.join(items_path, res[ITEM_IMAGE_DIR_KEY])
                 colors = os.listdir(item_dir)
 
+                # TODO 
                 for color in colors: 
                     res_["colors"][color] = os.path.join("http://192.168.0.105:5111/images/",
                                                         res[ITEM_IMAGE_DIR_KEY], color, "1.png")
@@ -57,16 +73,24 @@ def read_items():
 
 def read_item_by_id(id: int):
     """
-        colors = {
-            red : {
-                image_list: [],
-                s_no: int,
-                m_no: int,
-                l_no: int,
-                xl_no: int,
-                xxl_no: int
-            },
-            blu : {}
+        res_ = {
+            _id : int,
+            title: srt,
+            price: float, 
+            description: str, 
+            category: str
+            colors = {
+                red : {
+                    image_list: [],
+                    item_store_id: int,
+                    s_no: int,
+                    m_no: int,
+                    l_no: int,
+                    xl_no: int,
+                    xxl_no: int
+                },
+                blu : {}
+            }
         }
     """
     try:
@@ -82,7 +106,7 @@ def read_item_by_id(id: int):
             res_["category"] = res["category"]
 
             _, query_itemstore_list = crud.read_item_store_by_image_folder_dir(db,
-                                                                          image_folder_dir=res_["image_folder_dir"])
+                                                                          image_folder_dir=res["image_folder_dir"])
             # ===================
             res_["colors"] = {}
             item_dir = os.path.join(items_path, res[ITEM_IMAGE_DIR_KEY])
@@ -91,6 +115,7 @@ def read_item_by_id(id: int):
                 color = query_itemstore["color"]
 
                 res_["colors"][color] = {}
+                res_["colors"][color]["item_store_id"] = query_itemstore["id"]
                 res_["colors"][color]["s_no"] = query_itemstore["s_no"]
                 res_["colors"][color]["m_no"] = query_itemstore["m_no"]
                 res_["colors"][color]["l_no"] = query_itemstore["l_no"]
@@ -118,6 +143,21 @@ def read_item_by_id(id: int):
                                               context=str(e)))
 
 def read_item_by_sex(sex: Sex): 
+    """
+        total_res = [{
+                    _id : int,
+                    title: srt,
+                    price: float, 
+                    description: str, 
+                    category: str
+                    colors = {
+                        red_dir : 
+                        blu_dir : 
+            }
+        },
+        {}
+        ]
+    """
     try:
         status, query_result = crud.read_item_by_sex(db, sex)
         if status == DbOpStatus.SUCCESS:
@@ -153,6 +193,21 @@ def read_item_by_sex(sex: Sex):
         return ServiceResult(AppExceptionCase(status_code=http_status.HTTP_500_INTERNAL_SERVER_ERROR, context=str(e)))
 
 def read_item_by_sex_and_category(sex: Sex, category: Category):
+    """
+        total_res = [{
+                    _id : int,
+                    title: srt,
+                    price: float, 
+                    description: str, 
+                    category: str
+                    colors = {
+                        red_dir : 
+                        blu_dir : 
+            }
+        },
+        {}
+        ]
+    """
     try:
         status, query_result = crud.read_item_by_sex_and_category(db, sex, category)
         if status == DbOpStatus.SUCCESS:

@@ -67,3 +67,19 @@ class AppException(object):
             status_code = 404
             AppExceptionCase.__init__(self, status_code, context)
 
+    class InvalidToken(AppExceptionCase):
+        def __init__(self, context: dict = None):
+            """
+            Invalid token.
+            """
+            status_code = 401
+            AppExceptionCase.__init__(self, status_code, context)
+
+
+    class InvalidCredentials(AppExceptionCase):
+        def __init__(self, context: dict = None):
+            """
+            Invalid credentials
+            """
+            status_code = 401
+            AppExceptionCase.__init__(self, status_code, context)

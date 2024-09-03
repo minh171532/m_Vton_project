@@ -1,13 +1,14 @@
 import traceback
 from fastapi import status as http_status
 from config import LOGGER
-from app.utils.app_exceptions import AppExceptionCase
+from app.utils.app_exceptions import AppExceptionCase, AppException
 from app.utils.service_result import ServiceResult
 from app.database import SessionLocal
 from models import crud
 from models.enums import DbOpStatus, UserRoles
 from models.user import User
 from pydantic_models.user_model import UserPydantic
+from auth.auth_handler import signJWT 
 
 db = SessionLocal()
 
@@ -53,6 +54,21 @@ def read_user_by_username(username):
     except Exception as e:
         LOGGER.error("Exception: {}".format(e))
         return ServiceResult(AppExceptionCase(status_code=http_status.HTTP_500_INTERNAL_SERVER_ERROR, context=str(e)))
+
+def login(user): 
+    try:
+        status, data = crud.read_one_user(db, user.username)
+        if not data:
+            return ServiceResult(AppException.IDNotFound({"username": user.username}))
+        if not data.check_password(user.password):
+            return ServiceResult(AppException.InvalidCredentials({"username": user.username}))
+        
+        access_token = signJWT(user.username) 
+        user = {}
+        # TODO CHECK UI 
+        return ServiceResult(user)
+    except Exception as e:
+        return ServiceResult(AppException.NotImplementedError({"exception": str(e)}))
 
 
 def create_new_user(user_pydantic: UserPydantic):
