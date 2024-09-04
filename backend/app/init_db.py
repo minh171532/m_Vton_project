@@ -28,7 +28,10 @@ if ret_code == DbOpStatus.SUCCESS and user_ob is not None:
 user = User(
     username=CONFIG.USERNAME,
     email=CONFIG.EMAIL,
-    role=UserRoles.ADMIN
+    firstname="abc",
+    lastname="abc",
+
+    # role=UserRoles.ADMIN
 )
 user.set_password(password="helloworld")
 ret_code, created_user = crud.create_user(db=db, user=user)

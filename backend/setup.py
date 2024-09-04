@@ -24,6 +24,10 @@ os.makedirs(STORAGE_DIR, exist_ok=True)
 USERNAME=os.getenv('USERNAME')
 EMAIL=os.getenv('EMAIL')
 
+# token 
+SECRET = os.getenv('SECRET')
+ALGORITHM = os.getenv('ALGORITHM')
+
 # log dir
 LOG_DIR = os.path.join(STORAGE_DIR, "LOG")
 os.makedirs(LOG_DIR, exist_ok=True)

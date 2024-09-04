@@ -8,8 +8,8 @@ class UserPydantic(BaseModel, use_enum_values=True):
     username: str
     password: str
     email: Optional[str] = None
-    role: UserRoles
-    setting_path: str
+    firstname: str 
+    lastname: str
     description: Optional[str] = None
 
 class UserLogin(BaseModel):

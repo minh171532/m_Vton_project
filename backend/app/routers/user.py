@@ -7,7 +7,7 @@ from app.core import user as core
 from app.pydantic_models import UserPydantic, UserLogin
 from app.auth import JWTBearer 
 
-router = APIRouter(prefix="/api/user", tags=["/api/user"], dependencies=[Depends(JWTBearer())])
+router = APIRouter(prefix="/api/user", tags=["/api/user"])
 
 
 @router.get("/")
@@ -33,7 +33,7 @@ async def login(user: UserLogin ):
     return handle_result(response)
 
 
-@router.post("/")
+@router.post("/signup")
 def create_user(user_pydantic: UserPydantic):
     LOGGER.info(f"Request create user")
     response = core.create_new_user(user_pydantic)

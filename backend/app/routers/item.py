@@ -1,13 +1,13 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends 
 from starlette.responses import Response
 
 from config import LOGGER
 from app.utils.service_result import handle_result
 from app.core import item as core
 from app.pydantic_models import ItemPydantic, Sex , Category
+from app.auth import JWTBearer 
 
-
-router = APIRouter(prefix="/api/item", tags=["/api/item"])
+router = APIRouter(prefix="/api/item", tags=["/api/item"], dependencies=[Depends(JWTBearer())])
 
 
 @router.get("/")

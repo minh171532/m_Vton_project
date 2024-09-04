@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 from dotenv import load_dotenv
-from setup import TIMEZONE, TIME_STR, USERNAME, EMAIL
+from setup import TIMEZONE, TIME_STR, USERNAME, EMAIL, SECRET, ALGORITHM
 from setup import PYTHON_PATH, APP_PATH, STORAGE_DIR, LOG_DIR, DATABASE_DIR, ITEM_DIR, INFERENCE_DIR, INFERENCE_IN_DIR, INFERENCE_OUT_DIR           
 from app.logs.timeit import timeit, async_timeit
 from app.logs.log import get_log, LOG_TYPE
@@ -22,6 +22,9 @@ class CONFIG:
     USERNAME = USERNAME
     EMAIL = EMAIL
     # 
+    SECRET= SECRET
+    ALGORITHM = ALGORITHM
+
     DATABASE_DIR = DATABASE_DIR
     #
     ITEM_DIR = ITEM_DIR

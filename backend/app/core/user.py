@@ -62,11 +62,19 @@ def login(user):
             return ServiceResult(AppException.IDNotFound({"username": user.username}))
         if not data.check_password(user.password):
             return ServiceResult(AppException.InvalidCredentials({"username": user.username}))
-        
+        data = data.__dict__
         access_token = signJWT(user.username) 
-        user = {}
-        # TODO CHECK UI 
-        return ServiceResult(user)
+
+        response = {}
+        response["user"] = {}
+        response["user"]["_id"] = data["id"]
+        response["user"]["email"] = data["email"] 
+        response["user"]["firstName"] = data["firstname"] 
+        response["user"]["lastName"] = data["lastname"]
+        response["user"]["userName"] = data["username"]
+        response["token"] = access_token
+        
+        return ServiceResult(response)
     except Exception as e:
         return ServiceResult(AppException.NotImplementedError({"exception": str(e)}))
 
@@ -76,7 +84,9 @@ def create_new_user(user_pydantic: UserPydantic):
         user_ob = User(
             username=user_pydantic.username,
             email=user_pydantic.email,
-            role=UserRoles(user_pydantic.role),
+            firstname= user_pydantic.firstname,
+            lastname= user_pydantic.lastname,
+            # role=UserRoles(user_pydantic.role),
             description=user_pydantic.description,
         )
         user_ob.set_password(user_pydantic.password)
@@ -84,7 +94,18 @@ def create_new_user(user_pydantic: UserPydantic):
         if status == DbOpStatus.SUCCESS:
             data_dict = data.__dict__
             data_dict = remove_hashed_password_key(data_dict)
-            return ServiceResult(data_dict)
+            # TODO 
+            access_token = signJWT(user_pydantic.username)
+            response = {}
+            response["user"] = {}
+            response["user"]["_id"] = data_dict["id"]
+            response["user"]["email"] = data_dict["email"] 
+            response["user"]["firstName"] = data_dict["firstname"] 
+            response["user"]["lastName"] = data_dict["lastname"]
+            response["user"]["userName"] = data_dict["username"]
+            response["token"] = access_token
+
+            return ServiceResult(response)
         else:
             LOGGER.error("DB Exception: {}".format(data))
             return ServiceResult(AppExceptionCase(status_code=http_status.HTTP_500_INTERNAL_SERVER_ERROR, context=data))

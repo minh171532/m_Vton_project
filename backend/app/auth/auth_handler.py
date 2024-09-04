@@ -1,12 +1,10 @@
-# This file is responsible for signing , encoding , decoding and returning JWTS
 import time
-from typing import Dict
-
 import jwt
-from decouple import config
+from typing import Dict
+from config import CONFIG 
 
-JWT_SECRET = config("secret")
-JWT_ALGORITHM = config("algorithm")
+JWT_SECRET = CONFIG.SECRET
+JWT_ALGORITHM = CONFIG.ALGORITHM 
 
 # function used for signing the JWT string
 def signJWT(username: str) -> Dict[str, str]:
