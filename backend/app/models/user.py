@@ -16,8 +16,8 @@ class User(Base):
     hashed_password = Column(String, nullable=False)
     email = Column(EmailType, nullable=True, unique=True)
     # role = Column(Enum(UserRoles), nullable=False)
-    firstname = Column(String, nullable=False)
-    lastname = Column(String, nullable=False)
+    firstName = Column(String, nullable=False)
+    lastName = Column(String, nullable=False)
 
     description = Column(String, nullable=True)
 

@@ -1,11 +1,11 @@
-from fastapi import APIRouter, Depends 
+from fastapi import APIRouter
 from starlette.responses import Response
 
 from config import LOGGER
 from app.utils.service_result import handle_result
 from app.core import user as core
 from app.pydantic_models import UserPydantic, UserLogin
-from app.auth import JWTBearer 
+
 
 router = APIRouter(prefix="/api/user", tags=["/api/user"])
 

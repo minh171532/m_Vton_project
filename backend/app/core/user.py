@@ -69,9 +69,9 @@ def login(user):
         response["user"] = {}
         response["user"]["_id"] = data["id"]
         response["user"]["email"] = data["email"] 
-        response["user"]["firstName"] = data["firstname"] 
-        response["user"]["lastName"] = data["lastname"]
-        response["user"]["userName"] = data["username"]
+        response["user"]["firstName"] = data["firstName"] 
+        response["user"]["lastName"] = data["lastName"]
+        response["user"]["username"] = data["username"]
         response["token"] = access_token
         
         return ServiceResult(response)
@@ -84,8 +84,8 @@ def create_new_user(user_pydantic: UserPydantic):
         user_ob = User(
             username=user_pydantic.username,
             email=user_pydantic.email,
-            firstname= user_pydantic.firstname,
-            lastname= user_pydantic.lastname,
+            firstName= user_pydantic.firstName,
+            lastName= user_pydantic.lastName,
             # role=UserRoles(user_pydantic.role),
             description=user_pydantic.description,
         )
@@ -100,9 +100,9 @@ def create_new_user(user_pydantic: UserPydantic):
             response["user"] = {}
             response["user"]["_id"] = data_dict["id"]
             response["user"]["email"] = data_dict["email"] 
-            response["user"]["firstName"] = data_dict["firstname"] 
-            response["user"]["lastName"] = data_dict["lastname"]
-            response["user"]["userName"] = data_dict["username"]
+            response["user"]["firstName"] = data_dict["firstName"] 
+            response["user"]["lastName"] = data_dict["lastName"]
+            response["user"]["username"] = data_dict["username"]
             response["token"] = access_token
 
             return ServiceResult(response)

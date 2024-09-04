@@ -28,8 +28,8 @@ if ret_code == DbOpStatus.SUCCESS and user_ob is not None:
 user = User(
     username=CONFIG.USERNAME,
     email=CONFIG.EMAIL,
-    firstname="abc",
-    lastname="abc",
+    firstName="abc",
+    lastName="abc",
 
     # role=UserRoles.ADMIN
 )
