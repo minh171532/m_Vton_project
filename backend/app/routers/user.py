@@ -1,13 +1,13 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends 
 from starlette.responses import Response
 
 from config import LOGGER
 from app.utils.service_result import handle_result
 from app.core import user as core
-from app.pydantic_models import UserPydantic
+from app.pydantic_models import UserPydantic, UserLogin
+from app.auth import JWTBearer 
 
-
-router = APIRouter(prefix="/api/user", tags=["/api/user"])
+router = APIRouter(prefix="/api/user", tags=["/api/user"], dependencies=[Depends(JWTBearer())])
 
 
 @router.get("/")
@@ -23,6 +23,13 @@ def read_one_user(username) -> Response:
     LOGGER.info(f"Request get user by username: {username}")
     response = core.read_user_by_username(username)
     LOGGER.info("Response: response={}".format(response))
+    return handle_result(response)
+
+@router.post("/login")
+async def login(user: UserLogin ):
+    LOGGER.info("Request: login user user={}".format(user))
+    response = core.login(user)
+    LOGGER.info("Response: login user result={}".format(response))
     return handle_result(response)
 
 
