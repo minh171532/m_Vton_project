@@ -86,13 +86,14 @@ const SignUp = () => {
       const password = data.get("password");
       const confirmPassword = data.get("confirmPassword");
       if (password === confirmPassword) {
+         
          dispatch(
             registerUser({
-               lastName,
-               firstName,
-               email,
                username,
                password,
+               email,
+               lastName,
+               firstName,
             })
          );
       }

@@ -74,6 +74,7 @@ const SingleProduct = () => {
    // const { _id, title, price, description, category, colors  } = singleItem;
    const { title, price, description, category, colors, _id  } = singleItem;
    // (=> must change Object.values => Object.entries)
+   // TODO 
    const imageList = Object.values(colors)[0]
 
    const dispatch = useDispatch();
