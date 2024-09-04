@@ -74,8 +74,11 @@ const SingleProduct = () => {
    // const { _id, title, price, description, category, colors  } = singleItem;
    const { title, price, description, category, colors, _id  } = singleItem;
    // (=> must change Object.values => Object.entries)
-   // TODO 
-   const imageList = Object.values(colors)[0]
+   // const color_list = []
+   
+   
+
+   // const imageList = Object.values(colors)[0]
 
    const dispatch = useDispatch();
 
@@ -107,12 +110,11 @@ const SingleProduct = () => {
       <Grid container className={classes.container}>
          <Grid item xs={12} sm={4}>
 
-
             {/* <div className={classes.imgContainer}>
                <img src={image} alt={title} className={classes.img} />
             </div> */}
             <div className={classes.imgContainer}>
-               <CarouselBox imageList={imageList}/>
+               {/* <CarouselBox imageList={imageList}/> */}
             </div>
          </Grid>
          <Grid item xs={12} sm={4}>
@@ -137,12 +139,11 @@ const SingleProduct = () => {
                )}
             </div>
          </Grid> 
-{/* 
-         <Grid item xs={12} sm={6}>
+
+         <Grid item xs={12} sm={4}>
             <Typography className={classes.marginTopTwo} variant="h4">
                {title}
             </Typography>
-
             <Chip
                label={category}
                variant="outlined"
@@ -158,6 +159,8 @@ const SingleProduct = () => {
                ${price}
             </Typography>
 
+
+            {/* TODO */}
             <Button
                className={classNames(classes.letterSpace, classes.marginTopTwo)}
                fullWidth
@@ -168,7 +171,7 @@ const SingleProduct = () => {
             >
                Add to Cart
             </Button> 
-         </Grid>   */}
+         </Grid>  
 
       </Grid>
       <ItemList />

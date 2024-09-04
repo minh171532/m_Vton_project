@@ -7,7 +7,8 @@ from app.core import item as core
 from app.pydantic_models import ItemPydantic, Sex , Category
 from app.auth import JWTBearer 
 
-router = APIRouter(prefix="/api/item", tags=["/api/item"], dependencies=[Depends(JWTBearer())])
+# router = APIRouter(prefix="/api/item", tags=["/api/item"], dependencies=[Depends(JWTBearer())])
+router = APIRouter(prefix="/api/item", tags=["/api/item"])
 
 
 @router.get("/")
