@@ -81,6 +81,7 @@ def read_item_by_id(id: int):
             category: str
             colors = {
                 red : {
+                    img_dir = str,
                     image_list: [],
                     item_store_id: int,
                     s_no: int,
@@ -115,6 +116,8 @@ def read_item_by_id(id: int):
                 color = query_itemstore["color"]
 
                 res_["colors"][color] = {}
+                res_["colors"][color]["img_dir"] = os.path.join("http://192.168.0.105:5111/images/",
+                                                                res[ITEM_IMAGE_DIR_KEY], color, "1.png")
                 res_["colors"][color]["item_store_id"] = query_itemstore["id"]
                 res_["colors"][color]["s_no"] = query_itemstore["s_no"]
                 res_["colors"][color]["m_no"] = query_itemstore["m_no"]

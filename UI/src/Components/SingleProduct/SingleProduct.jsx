@@ -8,6 +8,7 @@ import {
    alpha,
    Chip,
    Box,
+   Avatar,
    Container,
 } from "@material-ui/core";
 import classNames from "classnames";
@@ -71,14 +72,33 @@ const SingleProduct = () => {
 
    const classes = useStyles();
    // TODO 
-   // const { _id, title, price, description, category, colors  } = singleItem;
    const { title, price, description, category, colors, _id  } = singleItem;
-   // (=> must change Object.values => Object.entries)
-   // const color_list = []
-   
-   
 
-   // const imageList = Object.values(colors)[0]
+   const [color, setColor] = React.useState(Object.keys(colors)[0])
+   const [ size, setSize ] = React.useState("")
+
+   const [ sizeDict, setSizeDict ] = React.useState({ S: colors[color]["s_no"], 
+                                                      M: colors[color]["m_no"],
+                                                      L: colors[color]["l_no"],
+                                                      XL: colors[color]["xl_no"],
+                                                      XXL: colors[color]["xxl_no"] })
+
+   const [ imageList, setImageList ] = React.useState(colors[color]["image_list"])
+
+   const handleColorClick = (event, key) => {
+      setImageList(colors[key]["image_list"])
+      setColor(key)
+
+      setSizeDict({ S: colors[key]["s_no"], 
+                    M: colors[key]["m_no"],
+                    L: colors[key]["l_no"],
+                    XL: colors[key]["xl_no"],
+                    XXL: colors[key]["xxl_no"] 
+                  })
+   } 
+   const handleSizeClick = () => {
+      setSize()
+   }
 
    const dispatch = useDispatch();
 
@@ -108,16 +128,12 @@ const SingleProduct = () => {
    return (
       <>
       <Grid container className={classes.container}>
-         <Grid item xs={12} sm={4}>
-
-            {/* <div className={classes.imgContainer}>
-               <img src={image} alt={title} className={classes.img} />
-            </div> */}
+         <Grid item xs={12} sm={3}>
             <div className={classes.imgContainer}>
-               {/* <CarouselBox imageList={imageList}/> */}
+               <CarouselBox imageList={imageList}/>
             </div>
          </Grid>
-         <Grid item xs={12} sm={4}>
+         <Grid item xs={12} sm={3}>
             <div className={classes.imgContainer}>
                {selectedImage ? (
                   <Box     
@@ -140,37 +156,61 @@ const SingleProduct = () => {
             </div>
          </Grid> 
 
-         <Grid item xs={12} sm={4}>
-            <Typography className={classes.marginTopTwo} variant="h4">
-               {title}
-            </Typography>
-            <Chip
-               label={category}
-               variant="outlined"
-               className={classes.marginTopTwo}
-            />
-            <Typography
-               className={classNames(classes.paleText, classes.marginTopTwo)}
-               variant="body1"
-            >
-               {description}
-            </Typography>
-            <Typography className={classes.marginTopTwo} variant="subtitle2">
-               ${price}
-            </Typography>
+         <Grid item xs={12} sm={3}>
+            <Grid container> 
+               <Grid xs={12}>
+                  <Typography className={classes.marginTopTwo} variant="h4">{title}</Typography>
+               </Grid>
+               <Grid xs={12}>
+                  <Chip label={category} variant="outlined" className={classes.marginTopTwo}/>
+               </Grid>
+               <Grid xs={12}>
+                  <Typography className={classNames(classes.paleText, classes.marginTopTwo)} variant="body1">
+                     {description}
+                  </Typography>
+               </Grid>
+               <Grid xs={12}>
+                  <Typography className={classes.marginTopTwo} variant="subtitle2">
+                     ${price}
+                  </Typography>
+               </Grid>
+               {/* --------COLOR---------- */}
+               <Grid xs={12}>
+                  <Typography className={classNames(classes.paleText, classes.marginTopTwo)} variant="body1" >
+                     COLOR: {color}
+                  </Typography>
+               </Grid>
+               <Grid>
+                  {Object.keys(colors).map((key) => (
+                     <Grid key={key} item>
+                        <Avatar alt="img.." src={colors[key]["img_dir"]} onClick={(event) => handleColorClick(event, key)} variant="rounded" />
+                     </Grid>
+                  )) }
+               </Grid>
+               {/* SIZE */}
+               <Grid container justifyContent="center" spacing={2}>
+                  <Typography className={classNames(classes.paleText, classes.marginTopTwo)} variant="body1" >
+                     SIZE: {size}
+                  </Typography>
+               </Grid> 
+               <Grid container justifyContent="center" spacing={2}>
+               </Grid>
+               {/* ADD to card button */}
+               <Grid item xs={12}>
+                  <Button
+                     className={classNames(classes.letterSpace, classes.marginTopTwo)}
+                     fullWidth
+                     variant="contained"
+                     color="primary"
+                     disabled={pending}
+                     onClick={handleClick}
+                  >
+                     Add to Cart
+                  </Button> 
 
+               </Grid>
 
-            {/* TODO */}
-            <Button
-               className={classNames(classes.letterSpace, classes.marginTopTwo)}
-               fullWidth
-               variant="contained"
-               color="primary"
-               disabled={pending}
-               onClick={handleClick}
-            >
-               Add to Cart
-            </Button> 
+            </Grid>
          </Grid>  
 
       </Grid>
