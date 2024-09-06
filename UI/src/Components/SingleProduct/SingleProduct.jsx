@@ -60,9 +60,17 @@ const useStyles = makeStyles((theme) => ({
    letterSpace: {
       letterSpacing: 2.5,
    },
+   square_button: {
+      width: 32,
+      height: 32,
+      borderRadius: 0,
+      padding: 0,
+      minWidth: 0, // Remove default min-width
+   },
 }));
 
 const SingleProduct = () => {
+   console.log("rerender ......................")
    const { singleItem } = useSelector((state) => state.app);
    const { pending, error } = useSelector((state) => state.cart);
    const user = useSelector((state) => state.user.user);
@@ -75,30 +83,16 @@ const SingleProduct = () => {
    const { title, price, description, category, colors, _id  } = singleItem;
 
    const [color, setColor] = React.useState(Object.keys(colors)[0])
-   const [ size, setSize ] = React.useState("")
-
-   const [ sizeDict, setSizeDict ] = React.useState({ S: colors[color]["s_no"], 
-                                                      M: colors[color]["m_no"],
-                                                      L: colors[color]["l_no"],
-                                                      XL: colors[color]["xl_no"],
-                                                      XXL: colors[color]["xxl_no"] })
+   const [ size, setSize ] = React.useState(null)
 
    const [ imageList, setImageList ] = React.useState(colors[color]["image_list"])
 
    const handleColorClick = (event, key) => {
-      setImageList(colors[key]["image_list"])
-      setColor(key)
+      setImageList(colors[key]["image_list"]);
+      setColor(key);
+      setSize(null);
 
-      setSizeDict({ S: colors[key]["s_no"], 
-                    M: colors[key]["m_no"],
-                    L: colors[key]["l_no"],
-                    XL: colors[key]["xl_no"],
-                    XXL: colors[key]["xxl_no"] 
-                  })
    } 
-   const handleSizeClick = () => {
-      setSize()
-   }
 
    const dispatch = useDispatch();
 
@@ -175,12 +169,12 @@ const SingleProduct = () => {
                   </Typography>
                </Grid>
                {/* --------COLOR---------- */}
-               <Grid xs={12}>
+               <Grid container justifyContent="flex-start" xs={12}>
                   <Typography className={classNames(classes.paleText, classes.marginTopTwo)} variant="body1" >
                      COLOR: {color}
                   </Typography>
                </Grid>
-               <Grid>
+               <Grid container justifyContent="flex-start" spacing={2}>
                   {Object.keys(colors).map((key) => (
                      <Grid key={key} item>
                         <Avatar alt="img.." src={colors[key]["img_dir"]} onClick={(event) => handleColorClick(event, key)} variant="rounded" />
@@ -188,12 +182,43 @@ const SingleProduct = () => {
                   )) }
                </Grid>
                {/* SIZE */}
-               <Grid container justifyContent="center" spacing={2}>
+               <Grid xs={12}>
                   <Typography className={classNames(classes.paleText, classes.marginTopTwo)} variant="body1" >
                      SIZE: {size}
                   </Typography>
                </Grid> 
-               <Grid container justifyContent="center" spacing={2}>
+
+               <Grid spacing={2} xs={12}>
+                  <Button 
+                     variant="outlined" 
+                     className={classes.square_button} 
+                     disabled={ colors[color]["s_no"] < 1 ? true : false}
+                     onClick={(e) => setSize("S")}
+                  > S </Button>
+                  <Button 
+                     variant="outlined" 
+                     className={classes.square_button} 
+                     disabled={ colors[color]["m_no"] < 1 ? true : false}
+                     onClick={(e) => setSize("M")}
+                  > M </Button>
+                  <Button 
+                     variant="outlined" 
+                     className={classes.square_button} 
+                     disabled={ colors[color]["l_no"] < 1 ? true : false}
+                     onClick={(e) => setSize("L")}
+                  > L </Button>
+                  <Button 
+                     variant="outlined" 
+                     className={classes.square_button} 
+                     disabled={ colors[color]["xl_no"] < 1 ? true : false}
+                     onClick={(e) => setSize("XL")}
+                  > XL </Button>
+                  <Button 
+                     variant="outlined" 
+                     className={classes.square_button} 
+                     disabled={ colors[color]["xxl_no"] < 1 ? true : false}
+                     onClick={(e) => setSize("XXL")}
+                  > XXL </Button>
                </Grid>
                {/* ADD to card button */}
                <Grid item xs={12}>

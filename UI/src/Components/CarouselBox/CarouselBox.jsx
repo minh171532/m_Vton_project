@@ -18,7 +18,7 @@ const CustomCard = ({ url }) => {
 };
 
 const CarouselBox = ({imageList}) => {
-    console.log(" image list : ", imageList)
+    // console.log(" image list : ", imageList)
 
     const [carouselIndex, setCarouselIndex] = useState(0)
 
