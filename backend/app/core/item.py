@@ -1,5 +1,4 @@
 import os
-import socket
 import traceback
 from fastapi import status as http_status
 from config import CONFIG, LOGGER
@@ -52,10 +51,10 @@ def read_items():
 
                 # TODO 
                 for color in colors: 
-                    res_["colors"][color] = os.path.join("http://192.168.0.105:5111/images/",
+                    res_["colors"][color] = os.path.join("http://localhost:5111/images/",
                                                         res[ITEM_IMAGE_DIR_KEY], color, "1.png")
                     
-                # res_["image"] = f"http://192.168.0.105:5111/images/{res[ITEM_IMAGE_DIR_KEY]}"
+                # res_["image"] = f"http://localhost:5111/images/{res[ITEM_IMAGE_DIR_KEY]}"
                 res_["__v"] = 0 
                 total_res.append(res_)
 
@@ -116,7 +115,7 @@ def read_item_by_id(id: int):
                 color = query_itemstore["color"]
 
                 res_["colors"][color] = {}
-                res_["colors"][color]["img_dir"] = os.path.join("http://192.168.0.105:5111/images/",
+                res_["colors"][color]["img_dir"] = os.path.join("http://localhost:5111/images/",
                                                                 res[ITEM_IMAGE_DIR_KEY], color, "1.png")
                 res_["colors"][color]["item_store_id"] = query_itemstore["id"]
                 res_["colors"][color]["s_no"] = query_itemstore["s_no"]
@@ -130,7 +129,7 @@ def read_item_by_id(id: int):
                 img_names = os.listdir(color_dir)
 
                 for img_name in img_names: 
-                    res_["colors"][color]["image_list"] .append(os.path.join("http://192.168.0.105:5111/images/",
+                    res_["colors"][color]["image_list"] .append(os.path.join("http://localhost:5111/images/",
                                                             res[ITEM_IMAGE_DIR_KEY], color, img_name))
             res_["__v"] = 0 
 
@@ -179,7 +178,7 @@ def read_item_by_sex(sex: Sex):
                 colors = os.listdir(item_dir)
 
                 for color in colors: 
-                    res_["colors"][color] = os.path.join("http://192.168.0.105:5111/images/",
+                    res_["colors"][color] = os.path.join("http://localhost:5111/images/",
                                                         res[ITEM_IMAGE_DIR_KEY], color, "1.png")
                     
                 res_["__v"] = 0 
@@ -229,7 +228,7 @@ def read_item_by_sex_and_category(sex: Sex, category: Category):
                 colors = os.listdir(item_dir)
 
                 for color in colors: 
-                    res_["colors"][color] = os.path.join("http://192.168.0.105:5111/images/",
+                    res_["colors"][color] = os.path.join("http://localhost:5111/images/",
                                                         res[ITEM_IMAGE_DIR_KEY], color, "1.png")
                     
                 res_["__v"] = 0 

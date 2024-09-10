@@ -40,7 +40,7 @@ export const getProductsInCategories = createAsyncThunk(
 //    return data;
 // });
 export const getItems = createAsyncThunk("products/fetch", async () => {
-   const { data } = await axios.get("http://192.168.0.105:5111/api/item");
+   const { data } = await axios.get("http://localhost:5111/api/item");
    return data;
 });
 
@@ -54,7 +54,7 @@ export const getItems = createAsyncThunk("products/fetch", async () => {
 export const getSingleItem = createAsyncThunk(
    "products/getSingleItem",
    async (id) => {
-      const { data } = await axios.get(`http://192.168.0.105:5111/api/item/${id}`);
+      const { data } = await axios.get(`http://localhost:5111/api/item/${id}`);
       return data;
    }
 );

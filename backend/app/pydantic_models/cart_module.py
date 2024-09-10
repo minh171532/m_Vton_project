@@ -8,7 +8,7 @@ class CartPydantic(BaseModel, use_enum_values=True):
     user_id: str 
     item_id: str 
     bill_id: str
-
-    quantity: int 
+    quantity: int = 1 
+    color: str  
     size: Optional[Size] = Size.M 
     status: Optional[CartStatus] = CartStatus.CHECKOUT

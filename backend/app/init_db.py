@@ -9,6 +9,7 @@ base.Base.metadata.create_all(bind=engine)
 # ===============
 import os 
 import glob
+import uuid 
 from database import SessionLocal
 from models import crud
 from models import * 
@@ -80,6 +81,34 @@ for sexFolder in sexFolders:
                     xl_no=10,
                     xxl_no=10
                 )
-                ret_code, created_item = crud.create_item_store(db=db, item_store=item_store )
+                ret_code, created_item_store = crud.create_item_store(db=db, item_store=item_store )
                 print("add item store into database", ret_code)
-                print("item_store", created_item.__dict__)
+                print("item_store", created_item_store.__dict__)
+
+
+
+    # create new cart, bill 
+    # created_user = created_user.__dict__ 
+    cart = Cart(
+        item_id=created_item.id,
+        user_id=created_user.id,
+        bill_id="temp",
+        quantity= 1,
+        size=Size.M, 
+        status=CartStatus.CHECKOUT
+    )
+
+    _, cart_= crud.create_cart(db=db, cart=cart)
+
+    print("cart >>>> ", cart.__dict__) 
+    # create new_bill 
+    
+    bill = Bill(
+        id = str(uuid.uuid4()),
+        name = "temp",
+        phone_number = "temp",
+        location="temp",
+        total_price = 20
+    )
+    _, bill_ = crud.create_bill(db=db, bill=bill)
+    print(bill.__dict__)

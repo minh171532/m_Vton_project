@@ -11,6 +11,9 @@ def create_bill(db, bill: Bill):
         db.rollback()  # Rollback on error
         print(f"An error occurred: {e}")
         return DbOpStatus.FAIL, str(e)
-
+    
 def read_bill_by_status(): 
+    pass 
+
+def read_bill_by_user_id(): 
     pass 

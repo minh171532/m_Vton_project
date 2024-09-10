@@ -5,7 +5,7 @@ from app.utils.app_exceptions import AppExceptionCase, AppException
 from app.utils.service_result import ServiceResult
 from app.database import SessionLocal
 from models import crud
-from models.enums import DbOpStatus, UserRoles
+from models.enums import DbOpStatus
 from models.user import User
 from pydantic_models.user_model import UserPydantic
 from auth.auth_handler import signJWT 

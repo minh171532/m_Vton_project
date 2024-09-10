@@ -5,10 +5,10 @@ class Bill(Base):
     __tablename__ = 'bills'
 
     id = Column(String, primary_key=True, index=True)
-    name = Column(String, nullable=False)
-    phone_number = Column(String, nullable=False)
-    location = Column(String, nullable=False)
-    total_price = Column(Float, nullable=False)
+    name = Column(String)
+    phone_number = Column(String)
+    location = Column(String)
+    total_price = Column(Float)
 
     created_at = Column(DateTime, primary_key=False, server_default=func.now())
     updated_at = Column(DateTime, primary_key=False, server_default=func.now(), onupdate=func.current_timestamp())

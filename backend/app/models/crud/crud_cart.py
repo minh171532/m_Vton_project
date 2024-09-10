@@ -48,20 +48,74 @@ def read_all_carts_by_id(db, id):
         TODO 
     """
     try:
-        query_result = db.query(Cart).filter_by(id=id).first()
+        query_result = db.query(Cart).filter_by(id=id).all()
         return DbOpStatus.SUCCESS, query_result
     except Exception as e:
         db.rollback()  # Rollback on error
         print(f"An error occurred: {e}")
         return DbOpStatus.FAIL, str(e)
+    
+def read_cart_by_userId_itemId_color_size_status(db, 
+                                                  user_id, 
+                                                  item_id, 
+                                                  color, 
+                                                  size, 
+                                                  status): 
+    """
+    """
+    try:
+        query_result = db.query(
+            Cart
+        ).filter(
+            user_id == user_id,
+            item_id == item_id,
+            color == color,
+            size == size,
+            status == status 
+        ).first()
+        return DbOpStatus.SUCCESS, query_result
+        
+    except Exception as e:
+        db.rollback()  # Rollback on error
+        print(f"An error occurred: {e}")
+        print(traceback.format_exc())
+        return DbOpStatus.FAIL, str(e)
 
-def update_user_item_vton_mode(db, id, vton_mode):
+def read_carts_by_userId_status(db, user_id, status): 
+    try:
+        query_result = db.query(Cart).filter(user_id == user_id,
+                                             status == status 
+                                            ).all()
+        return DbOpStatus.SUCCESS, query_result
+    except Exception as e:
+        db.rollback()  # Rollback on error
+        print(f"An error occurred: {e}")
+        print(traceback.format_exc())
+        return DbOpStatus.FAIL, str(e)
+
+def update_cart_quantity(db, id, quantity):
     """
         TODO
     """
     try:
-        selected_job = db.query(UserItem).filter_by(id=id).first()
-        selected_job.vton_mode = vton_mode
+        selected_cart = db.query(Cart).filter_by(id=id).first()
+        selected_cart.quantity = quantity
+        db.commit()
+        return DbOpStatus.SUCCESS, None
+
+    except Exception as e:
+        db.rollback()  # Rollback on error
+        print(f"An error occurred: {e}")
+        return DbOpStatus.FAIL, str(e)
+    
+def update_cart_status(db, user_id, status):
+    """
+        TODO
+    """
+    try:
+        selected_carts = db.query(Cart).filter_by(user_id=user_id).all()
+        for selected_cart in selected_carts:
+            selected_cart.status = status
         db.commit()
         return DbOpStatus.SUCCESS, None
 
@@ -70,13 +124,13 @@ def update_user_item_vton_mode(db, id, vton_mode):
         print(f"An error occurred: {e}")
         return DbOpStatus.FAIL, str(e)
 
-def delete_carts(db, id):
+def delete_cart_by_id(db, id):
     """
         TODO
     """
     try:
-        selected_job = db.query(UserItem).filter_by(id=id).first()
-        db.delete(selected_job)
+        selected_cart = db.query(Cart).filter_by(id=id).first()
+        db.delete(selected_cart)
         db.commit()
         return DbOpStatus.SUCCESS, None
 
@@ -85,60 +139,17 @@ def delete_carts(db, id):
         print(f"An error occurred: {e}")
         return DbOpStatus.FAIL, str(e)
 
-# def read_users_items_by_user_id(db, user_id):
-#     try:
-#         query_result = db.query(UserItem).filter_by(user_id=user_id).all()
-#         total_res = []
-#         for data_obj in query_result:
-#             res = data_obj.__dict__
-#             total_res.append(res)
-#         return DbOpStatus.SUCCESS, total_res
-
-#     except Exception as e:
-#         db.rollback()  # Rollback on error
-#         print(f"An error occurred: {e}")
-#         return DbOpStatus.FAIL, str(e)
-
-# def read_user_item_by_id(db,id):
-#     try:
-#         return DbOpStatus.SUCCESS, db.query(UserItem).filter_by(id=id).first()
-#     except Exception as e:
-#         db.rollback()  # Rollback on error
-#         print(f"An error occurred: {e}")
-#         return DbOpStatus.FAIL, str(e)
-
-# def update_user_item_status(db, id, status):
-#     try:
-#         selected_job = db.query(UserItem).filter_by(id=id).first()
-#         selected_job.status = status
-#         db.commit()
-#         return DbOpStatus.SUCCESS, None
-
-#     except Exception as e:
-#         db.rollback()  # Rollback on error
-#         print(f"An error occurred: {e}")
-#         return DbOpStatus.FAIL, str(e)
-
-# def update_user_item_vton_mode(db, id, vton_mode):
-#     try:
-#         selected_job = db.query(UserItem).filter_by(id=id).first()
-#         selected_job.vton_mode = vton_mode
-#         db.commit()
-#         return DbOpStatus.SUCCESS, None
-
-#     except Exception as e:
-#         db.rollback()  # Rollback on error
-#         print(f"An error occurred: {e}")
-#         return DbOpStatus.FAIL, str(e)
-
-# def delete_user_item(db, id):
-#     try:
-#         selected_job = db.query(UserItem).filter_by(id=id).first()
-#         db.delete(selected_job)
-#         db.commit()
-#         return DbOpStatus.SUCCESS, None
-
-#     except Exception as e:
-#         db.rollback()  # Rollback on error
-#         print(f"An error occurred: {e}")
-#         return DbOpStatus.FAIL, str(e)
+def delete_cart_by_userId_status(db, user_id, status): 
+    try:
+        selected_carts = db.query(Cart).filter(user_id == user_id,
+                                             status == status 
+                                            ).all()
+        for selected_cart in selected_carts: 
+            db.delete(selected_cart)
+        db.commit()
+        return DbOpStatus.SUCCESS, None
+    except Exception as e:
+        db.rollback()  # Rollback on error
+        print(f"An error occurred: {e}")
+        print(traceback.format_exc())
+        return DbOpStatus.FAIL, str(e)

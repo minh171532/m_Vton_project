@@ -13,6 +13,7 @@ class Cart(Base):
     user_id = Column(String, ForeignKey("users.id"), index=True, nullable=False)
     bill_id = Column(String, nullable=False)
 
+    color = Column(String, nullable=False)
     quantity = Column(Integer, nullable=False)
     size = Column(Enum(Size), nullable=False)
     status = Column(Enum(CartStatus), nullable=False)

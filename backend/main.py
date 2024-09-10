@@ -10,7 +10,7 @@ from starlette.responses import FileResponse
 from config import APP_PATH, LOGGER, CONFIG
 # from app.routers import setting, authen, user, item
 # from app.routers import authen, user, item
-from app.routers import user, item
+from app.routers import user, item, cart 
 from app.logs.middleware import LogMiddleware
 from app.utils.app_exceptions import app_exception_handler, AppExceptionCase
 from app.utils.request_exceptions import http_exception_handler, request_validation_exception_handler
@@ -64,6 +64,8 @@ app.add_middleware(LogMiddleware)
 # app.include_router(authen.router)
 app.include_router(user.router)
 app.include_router(item.router)
+app.include_router(cart.router)
+
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host='0.0.0.0', port=5111, reload=True)
