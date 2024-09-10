@@ -1,3 +1,4 @@
+import uuid 
 from sqlalchemy import Column, Integer, String, DateTime, Enum, func, ForeignKey
 from sqlalchemy.orm import relationship
 from models.base import Base
@@ -7,7 +8,7 @@ from models.enums.size import Size
 
 class Cart(Base):
     __tablename__ = 'carts'
-    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    id = Column(String, primary_key=True, index=True, default=lambda: str(uuid.uuid4()))
     
     item_id = Column(Integer, ForeignKey("items.id"), index=True, nullable=False)
     user_id = Column(String, ForeignKey("users.id"), index=True, nullable=False)

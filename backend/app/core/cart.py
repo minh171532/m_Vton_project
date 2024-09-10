@@ -48,7 +48,7 @@ def add_to_cart(cart_pydantic: CartPydantic):
         if query_result: 
             # Update cart (increment)
             update_quantity = query_result.quantity + 1
-            crud.update_cart_quantity(db, cart_id=query_result.id, quantity=update_quantity)
+            crud.update_cart_quantity(db, id=query_result.id, quantity=update_quantity)
         else: 
             _, query_result = crud.read_carts_by_userId_status(db, 
                                                                user_id=cart_pydantic.user_id, 
@@ -58,6 +58,7 @@ def add_to_cart(cart_pydantic: CartPydantic):
                 cart_ob=Cart(item_id=cart_pydantic.item_id,
                              user_id=cart_pydantic.user_id,
                              bill_id=query_result[0].bill_id,
+                             color=cart_pydantic.color,
                              quantity=cart_pydantic.quantity,
                              size=Size(cart_pydantic.size), 
                              status=CartStatus.CHECKOUT
@@ -75,10 +76,11 @@ def add_to_cart(cart_pydantic: CartPydantic):
                     total_price = 0 
                 )                
                 crud.create_bill(db, bill_db)
-
+                print(">>> cart_pydantic  ", cart_pydantic.color)
                 cart_ob=Cart(item_id=cart_pydantic.item_id,
                              user_id=cart_pydantic.user_id,
                              bill_id=bill_db.id,
+                             color=cart_pydantic.color,
                              quantity=cart_pydantic.quantity,
                              size=Size(cart_pydantic.size), 
                              status=CartStatus.CHECKOUT
@@ -89,21 +91,22 @@ def add_to_cart(cart_pydantic: CartPydantic):
         status, query_results = crud.read_carts_by_userId_status(db, 
                                                     user_id=cart_pydantic.user_id, 
                                                     status=CartStatus.CHECKOUT)
+        
         if status == DbOpStatus.SUCCESS:
             response = {}
             count = 0 
             response["_id"] = query_results[0].bill_id 
-            response["count"] = ""
             response["products"] = []
 
             for query_result in query_results: 
                 query_result = query_result.__dict__ 
                 count += query_result["quantity"]
                 product = {}
-                product["create_at"]
+                product["create_at"] = query_result["created_at"]
+                product["quantity"] = query_result["quantity"]
                 product["color"] = query_result["color"]
-                product["size"]
-                product["id"] 
+                product["size"] = query_result["size"]
+                product["_id"] = query_result["item_id"]
                 product["product_id"] = {}
                 # 
                 _, item = crud.read_item_by_id(db, id=query_result["item_id"])
@@ -115,10 +118,11 @@ def add_to_cart(cart_pydantic: CartPydantic):
 
                 product["product_id"]["price"] = item["price"]
                 product["product_id"]["title"] = item["title"]
-                product["product_id"]["_id"] = item["id"]
+                product["product_id"]["_id"] = query_result["id"]
 
                 response["products"].append(product)
 
+            response["count"] = count 
             return ServiceResult(response)
         else:
             LOGGER.error("DB Exception: {}".format(query_results))

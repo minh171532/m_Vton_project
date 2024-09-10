@@ -94,6 +94,7 @@ for sexFolder in sexFolders:
         user_id=created_user.id,
         bill_id="temp",
         quantity= 1,
+        color="green",
         size=Size.M, 
         status=CartStatus.CHECKOUT
     )

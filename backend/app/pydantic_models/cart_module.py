@@ -4,7 +4,7 @@ from models.enums import CartStatus, Size
 
 
 class CartPydantic(BaseModel, use_enum_values=True):
-    id: Optional[int] = None
+    id: Optional[str] = None
     user_id: str 
     item_id: str 
     bill_id: str

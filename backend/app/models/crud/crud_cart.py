@@ -67,11 +67,11 @@ def read_cart_by_userId_itemId_color_size_status(db,
         query_result = db.query(
             Cart
         ).filter(
-            user_id == user_id,
-            item_id == item_id,
-            color == color,
-            size == size,
-            status == status 
+            Cart.user_id == user_id,
+            Cart.item_id == item_id,
+            Cart.color == color,
+            Cart.size == size,
+            Cart.status == status 
         ).first()
         return DbOpStatus.SUCCESS, query_result
         
@@ -83,8 +83,8 @@ def read_cart_by_userId_itemId_color_size_status(db,
 
 def read_carts_by_userId_status(db, user_id, status): 
     try:
-        query_result = db.query(Cart).filter(user_id == user_id,
-                                             status == status 
+        query_result = db.query(Cart).filter(Cart.user_id == user_id,
+                                             Cart.status == status 
                                             ).all()
         return DbOpStatus.SUCCESS, query_result
     except Exception as e:
