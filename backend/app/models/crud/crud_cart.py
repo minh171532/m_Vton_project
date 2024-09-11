@@ -43,12 +43,9 @@ def read_all_carts(db):
         print(traceback.format_exc())
         return DbOpStatus.FAIL, str(e)
 
-def read_all_carts_by_id(db, id): 
-    """
-        TODO 
-    """
+def read_cart_by_id(db, id): 
     try:
-        query_result = db.query(Cart).filter_by(id=id).all()
+        query_result = db.query(Cart).filter_by(id=id).first()
         return DbOpStatus.SUCCESS, query_result
     except Exception as e:
         db.rollback()  # Rollback on error
@@ -109,11 +106,8 @@ def update_cart_quantity(db, id, quantity):
         return DbOpStatus.FAIL, str(e)
     
 def update_cart_status(db, user_id, status):
-    """
-        TODO
-    """
     try:
-        selected_carts = db.query(Cart).filter_by(user_id=user_id).all()
+        selected_carts = db.query(Cart).filter_by(Cart.user_id==user_id).all()
         for selected_cart in selected_carts:
             selected_cart.status = status
         db.commit()
@@ -125,9 +119,6 @@ def update_cart_status(db, user_id, status):
         return DbOpStatus.FAIL, str(e)
 
 def delete_cart_by_id(db, id):
-    """
-        TODO
-    """
     try:
         selected_cart = db.query(Cart).filter_by(id=id).first()
         db.delete(selected_cart)
@@ -141,8 +132,8 @@ def delete_cart_by_id(db, id):
 
 def delete_cart_by_userId_status(db, user_id, status): 
     try:
-        selected_carts = db.query(Cart).filter(user_id == user_id,
-                                             status == status 
+        selected_carts = db.query(Cart).filter(Cart.user_id == user_id,
+                                             Cart.status == status 
                                             ).all()
         for selected_cart in selected_carts: 
             db.delete(selected_cart)

@@ -12,3 +12,10 @@ class CartPydantic(BaseModel, use_enum_values=True):
     color: str  
     size: Optional[Size] = Size.M 
     status: Optional[CartStatus] = CartStatus.CHECKOUT
+
+class CartUser(BaseModel):
+    user_id: str 
+
+class CartId(BaseModel): 
+    cart_id: str 
+    user_id: str 

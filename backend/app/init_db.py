@@ -85,31 +85,29 @@ for sexFolder in sexFolders:
                 print("add item store into database", ret_code)
                 print("item_store", created_item_store.__dict__)
 
+    # # create new cart, bill 
+    # # created_user = created_user.__dict__ 
+    # cart = Cart(
+    #     item_id=created_item.id,
+    #     user_id=created_user.id,
+    #     bill_id="temp",
+    #     quantity= 1,
+    #     color="green",
+    #     size=Size.M, 
+    #     status=CartStatus.CHECKOUT
+    # )
 
+    # _, cart_= crud.create_cart(db=db, cart=cart)
 
-    # create new cart, bill 
-    # created_user = created_user.__dict__ 
-    cart = Cart(
-        item_id=created_item.id,
-        user_id=created_user.id,
-        bill_id="temp",
-        quantity= 1,
-        color="green",
-        size=Size.M, 
-        status=CartStatus.CHECKOUT
-    )
-
-    _, cart_= crud.create_cart(db=db, cart=cart)
-
-    print("cart >>>> ", cart.__dict__) 
-    # create new_bill 
+    # print("cart >>>> ", cart.__dict__) 
+    # # create new_bill 
     
-    bill = Bill(
-        id = str(uuid.uuid4()),
-        name = "temp",
-        phone_number = "temp",
-        location="temp",
-        total_price = 20
-    )
-    _, bill_ = crud.create_bill(db=db, bill=bill)
-    print(bill.__dict__)
+    # bill = Bill(
+    #     id = str(uuid.uuid4()),
+    #     name = "temp",
+    #     phone_number = "temp",
+    #     location="temp",
+    #     total_price = 20
+    # )
+    # _, bill_ = crud.create_bill(db=db, bill=bill)
+    # print(bill.__dict__)
