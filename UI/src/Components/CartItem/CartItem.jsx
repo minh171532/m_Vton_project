@@ -80,14 +80,17 @@ const useStyles = makeStyles((theme) => ({
 const CartItem = ({ item }) => {
    const classes = useStyles();
    const { error, pending } = useSelector((state) => state.cart);
+   const { user } = useSelector((state) => state.user);
    const {
       quantity,
+      color,
+      size,
       product_id: { _id, image, price, title },
    } = item;
    const dispatch = useDispatch();
 
    const handleDelete = () => {
-      dispatch(removeItemFromCart(_id));
+      dispatch(removeItemFromCart({cart_id: _id, user_id: user._id}));
       if (!error && !pending) {
          dispatch(
             openSnackBar({
@@ -168,6 +171,20 @@ const CartItem = ({ item }) => {
                         color="initial"
                         className={classes.paleText}
                      >
+                        COLOR: {color}
+                     </Typography>
+                     <Typography
+                        variant="subtitle2"
+                        color="initial"
+                        className={classes.paleText}
+                     >
+                        SIZE: {size}
+                     </Typography>
+                     <Typography
+                        variant="subtitle2"
+                        color="initial"
+                        className={classes.paleText}
+                     >
                         {price} x {quantity}
                      </Typography>
                      <Typography variant="subtitle2" color="initial">
@@ -184,13 +201,13 @@ const CartItem = ({ item }) => {
                      xs={4}
                   >
                      <IconButton
-                        onClick={() => dispatch(decrementCartItem(_id))}
+                        onClick={() => dispatch(decrementCartItem({cart_id: _id, user_id: user._id}))}
                      >
                         <Remove className={classes.paleText} />
                      </IconButton>
                      <Typography variant="subtitle2">{quantity}</Typography>
                      <IconButton
-                        onClick={() => dispatch(incrementCartItem(_id))}
+                        onClick={() => dispatch(incrementCartItem({cart_id: _id, user_id: user._id}))}
                      >
                         <Add className={classes.paleText} />
                      </IconButton>

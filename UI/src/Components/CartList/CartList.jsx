@@ -91,6 +91,7 @@ const CartList = () => {
    const { cartItems, pending, cartLength, error, total } = useSelector(
       (state) => state.cart
    );
+   const { user } = useSelector((state) => state.user);
    const classes = useStyles();
    const navigate = useNavigate();
    const dispatch = useDispatch();
@@ -105,7 +106,7 @@ const CartList = () => {
    }, [dispatch, cartItems, cartLength]);
 
    const handleClearCart = () => {
-      dispatch(clearCart());
+      dispatch(clearCart(user._id));
       if (!error && !pending) {
          dispatch(
             openSnackBar({

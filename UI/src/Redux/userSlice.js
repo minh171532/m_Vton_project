@@ -7,7 +7,6 @@ export const loginUser = createAsyncThunk(
       try {
          // const { data } = await axios.post("/auth/login", user);
          const { data } = await axios.post("http://localhost:5111/api/user/login", user);
-         console.log("data >> ",data)
          localStorage.setItem(
             "user",
             JSON.stringify({ data: data.user, token: data.token })
@@ -26,7 +25,6 @@ export const registerUser = createAsyncThunk(
    async (user, { rejectWithValue }) => {
       try {
          const { lastName, firstName, email, username, password } = user;
-         const user_pydantic = user
          // const { data } = await axios.post("/auth/register", {
          const { data } = await axios.post("http://localhost:5111/api/user/signup", {
             username,

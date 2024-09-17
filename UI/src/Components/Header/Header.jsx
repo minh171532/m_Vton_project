@@ -122,7 +122,9 @@ const Header = () => {
    };
 
    useEffect(() => {
-      dispatch(fetchCartItems());
+      if (user) {
+         dispatch(fetchCartItems(user._id));
+      }
    }, [dispatch]);
 
    return (

@@ -70,7 +70,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const SingleProduct = () => {
-   console.log("rerender ......................")
    const { singleItem } = useSelector((state) => state.app);
    const { pending, error } = useSelector((state) => state.cart);
    const user = useSelector((state) => state.user.user);
@@ -100,7 +99,10 @@ const SingleProduct = () => {
       if (!user) {
          dispatch(openSnackBar({ severity: "error", text: "Please Log In" }));
       } else {
-         dispatch(addToCart(_id));
+         dispatch(addToCart({user_id: user._id, 
+                            item_id:_id, 
+                            color:color, 
+                            size:size}));
          if (!error && !pending) {
             dispatch(
                openSnackBar({

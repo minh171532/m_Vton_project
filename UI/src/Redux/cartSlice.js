@@ -1,47 +1,68 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const addToCart = createAsyncThunk("cart/add", async (id) => {
-   const { data } = await axios.post(`/cart`, { product_id: id });
+
+export const addToCart = createAsyncThunk("cart/add", async ({user_id, item_id, color, size}) => {      
+   const { data } = await axios.post(`http://localhost:5111/api/cart/add`, { 
+      user_id,                                                                 
+      item_id, 
+      bill_id: "temp",
+      quantity: 1,
+      color, 
+      size,
+       });
 
    return data;
 });
 
-export const fetchCartItems = createAsyncThunk("cart/fetchAll", async () => {
-   const { data } = await axios.get(`/cart`);
+export const fetchCartItems = createAsyncThunk("cart/fetchAll", async (user_id) => {
+   const { data } = await axios.post(`http://localhost:5111/api/cart/fetchAll`, {
+      user_id,
+   });
 
    return data;
 });
-export const clearCart = createAsyncThunk("cart/clearCart", async () => {
-   const { data } = await axios.delete(`/cart/delete_all`);
+
+export const clearCart = createAsyncThunk("cart/clearCart", async (user_id) => {
+   const { data } = await axios.post(`http://localhost:5111/api/cart/delete_all`, {
+      user_id,
+   });
    return data;
 });
+
 export const removeItemFromCart = createAsyncThunk(
    "cart/removeItem",
-   async (_id) => {
-      const { data } = await axios.delete(`/cart/delete/${_id}`);
-      return data;
-   }
-);
-export const incrementCartItem = createAsyncThunk(
-   "cart/incrementItem",
-   async (_id) => {
-      const { data } = await axios.patch(`/cart/increment`, {
-         product_id: _id,
-      });
-      return data;
-   }
-);
-export const decrementCartItem = createAsyncThunk(
-   "cart/removeItem",
-   async (_id) => {
-      const { data } = await axios.patch(`/cart/decrement`, {
-         product_id: _id,
+   async ({cart_id, user_id}) => {
+      const { data } = await axios.post(`http://localhost:5111/api/cart/delete`, {
+         cart_id,
+         user_id,
       });
       return data;
    }
 );
 
+export const incrementCartItem = createAsyncThunk(
+   "cart/incrementItem",
+   async ({cart_id, user_id}) => {
+      const { data } = await axios.post(`http://localhost:5111/api/cart/increment`, {
+         cart_id,
+         user_id,
+      });
+      return data;
+   }
+);
+
+export const decrementCartItem = createAsyncThunk(
+   "cart/removeItem",
+   async ({cart_id, user_id}) => {
+      const { data } = await axios.post(`http://localhost:5111/api/cart/decrement`, {
+         cart_id,
+         user_id,
+      });
+      return data;
+   }
+);
+// ==================
 export const checkout = createAsyncThunk("cart/checkout", async (formData) => {
    const { email, name, phoneNumber, amount } = formData;
    const { data } = await axios.post("/cart/checkout", {
