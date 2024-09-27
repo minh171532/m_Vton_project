@@ -1,0 +1,56 @@
+version: "3.3"
+services: 
+  postgres:
+    build: ./backend/postgres_database
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-PgiC9sPostgres@123}
+      DATABASE_USER: ${DATABASE_USER}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      DATABASE_PORT: ${DATABASE_PORT}
+      DATABASE_NAME: ${DATABASE_NAME}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    ports:
+      - "${DATABASE_PORT}:5432"
+    networks:
+      - postgres
+    restart: unless-stopped
+    
+  # backend:
+  #   build:
+  #     context: ./
+  #     dockerfile: ./backend/fastapi/Dockerfile
+  #   environment:
+  #     POSTGRES_USER: ${POSTGRES_USER:-postgres}
+  #     POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-PgiC9sPostgres@123}
+  #     DATABASE_USER: ${DATABASE_USER}
+  #     DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+  #     DATABASE_PORT: ${DATABASE_PORT}
+  #     DATABASE_IP: ${DATABASE_IP}
+  #     DATABASE_NAME: ${DATABASE_NAME}
+  #   depends_on:
+  #     postgres:
+  #       condition: service_healthy
+  #   volumes:
+  #     - ${STORAGE_DIR}:${STORAGE_DIR}
+
+  #   ports:
+  #     - "${FASTAPI_PORT}:5111"
+
+
+
+
+# volumes:
+#   postgres_data:
+#     name: ${DOCKER_POSTGRES_VOLUME_NAME}
+#     driver: local
+#     driver_opts:
+#       type: "none"
+#       o: "bind"
+#       device: ${DATABASE_DIR}

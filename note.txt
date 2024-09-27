@@ -1,0 +1,1 @@
+docker exec -it prototype_ui_root-postgres-1 psql -U pgic9s prototype_ui_db

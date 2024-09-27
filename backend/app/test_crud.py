@@ -56,14 +56,14 @@ if __name__ == "__main__":
 
     
 
-    vton = Vton(
-        user_id = "b3b819ba-296d-4bd7-9bac-000a88e75c2c",
-        item_store_id = 1,
-        mode = "UP"
-    )
+    # vton = Vton(
+    #     user_id = "b3b819ba-296d-4bd7-9bac-000a88e75c2c",
+    #     item_store_id = 1,
+    #     mode = "UP"
+    # )
 
-    ret_code, create_vton = crud.create_vton(db=db, vton=vton)
-    print("vton created .... ",create_vton)
+    # ret_code, create_vton = crud.create_vton(db=db, vton=vton)
+    # print("vton created .... ",create_vton)
 
     # # test update function
     # new_password = "Abcd1234"

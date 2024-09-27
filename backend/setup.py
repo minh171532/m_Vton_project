@@ -27,6 +27,12 @@ EMAIL=os.getenv('EMAIL')
 # token 
 SECRET = os.getenv('SECRET')
 ALGORITHM = os.getenv('ALGORITHM')
+# 
+RABBITMQ_IP = os.getenv('RABBITMQ_IP')
+RABBITMQ_PORT = os.getenv('RABBITMQ_PORT')
+RABBITMQ_USERNAME = os.getenv('RABBITMQ_USERNAME')
+RABBITMQ_PASSWORD = os.getenv('RABBITMQ_PASSWORD')
+RABBITMQ_TTL = os.getenv('RABBITMQ_TTL')
 
 # log dir
 LOG_DIR = os.path.join(STORAGE_DIR, "LOG")
@@ -42,9 +48,9 @@ SETTING_DIR = os.path.join(STATIC_DIR, "settings")
 os.makedirs(SETTING_DIR, exist_ok=True)
 
 
-# database dir
-DATABASE_DIR = os.path.join(STORAGE_DIR, "DATABASE")
-os.makedirs(DATABASE_DIR, exist_ok=True)
+# # database dir
+# DATABASE_DIR = os.path.join(STORAGE_DIR, "DATABASE")
+# os.makedirs(DATABASE_DIR, exist_ok=True)
 
 
 # item dir
@@ -61,6 +67,16 @@ INFERENCE_IN_DIR = os.getenv('INFERENCE_IN_DIR')
 INFERENCE_IN_DIR = INFERENCE_IN_DIR if INFERENCE_IN_DIR else os.path.join(INFERENCE_DIR, "INPUT")
 os.makedirs(INFERENCE_IN_DIR, exist_ok=True)
 
+HUMAN_IMAGE_DIR = os.getenv('HUMAN_IMAGE_DIR')
+HUMAN_IMAGE_DIR = HUMAN_IMAGE_DIR if HUMAN_IMAGE_DIR else os.path.join(INFERENCE_IN_DIR, "HUMAN_IMAGES")
+os.makedirs(HUMAN_IMAGE_DIR, exist_ok=True)
+
+MASK_IMAGE_DIR = os.getenv('HUMAN_IMAGE_DIR')
+MASK_IMAGE_DIR = MASK_IMAGE_DIR if MASK_IMAGE_DIR else os.path.join(INFERENCE_IN_DIR, "MASK_IMAGES")
+os.makedirs(MASK_IMAGE_DIR, exist_ok=True)
+
+
 INFERENCE_OUT_DIR =  os.getenv('INFERENCE_OUT_DIR')
 INFERENCE_OUT_DIR = INFERENCE_OUT_DIR if INFERENCE_OUT_DIR else os.path.join(INFERENCE_DIR, "OUTPUT")
 os.makedirs(INFERENCE_OUT_DIR, exist_ok=True)
+

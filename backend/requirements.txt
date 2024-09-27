@@ -1,4 +1,4 @@
-uvicon 
+uvicorn
 fastapi 
 ruamel.yaml
 easydict
@@ -6,3 +6,9 @@ loguru
 psycopg2
 SQLAlchemy
 SQLAlchemy-Utils
+python-dotenv
+bcrypt
+pytz
+PyYAML
+PyJWT
+python-multipart

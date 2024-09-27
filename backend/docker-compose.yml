@@ -17,11 +17,63 @@ services:
       retries: 5
     # volumes:
     #   - postgres_data:/var/lib/postgresql/data/
+
     ports:
       - "${DATABASE_PORT}:5432"
     # networks:
     #   - postgres
     restart: unless-stopped
+
+  rabbitmq: 
+    image: rabbitmq:3.9-management
+    environment: 
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USERNAME:-username}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD:-password}
+    healthcheck:
+      test: ["CMD-SHELL", "rabbitmqctl status"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    ports:
+      - "${RABBITMQ_PORT}:5672"
+      - "${RABBITMQ_UI_PORT}:15672"
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: ./
+      dockerfile: ./fastapi/Dockerfile
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-PgiC9sPostgres@123}
+      DATABASE_USER: ${DATABASE_USER}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      DATABASE_PORT: ${DATABASE_PORT}
+      DATABASE_IP: ${DATABASE_IP}
+      DATABASE_NAME: ${DATABASE_NAME}
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USERNAME:-username}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD:-password}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    volumes:
+      - ${LOCAL_STORAGE_DIR}:${STORAGE_DIR}
+    ports:
+      - "${FASTAPI_PORT}:5111"
+
+  # AI_service: 
+
+
+volumes:
+  postgres_data:
+    name: ${DOCKER_POSTGRES_VOLUME_NAME}
+    driver: local
+    driver_opts:
+      type: "none"
+      o: "bind"
+      device: ${LOCAL_DATABASE_DIR}
 
   # init_db:
   #   build:

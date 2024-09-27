@@ -17,4 +17,4 @@ class ItemStore(Base):
     created_at = Column(DateTime, server_default=func.now())
     updated_at = Column(DateTime, server_default=func.now(), onupdate=func.current_timestamp())
 
-    fk_vton = relationship("Vton", backref="item_store", cascade="all, delete")
+    # fk_vton = relationship("Vton", backref="item_store", cascade="all, delete")
