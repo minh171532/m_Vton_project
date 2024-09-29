@@ -1,6 +1,7 @@
 import os
 import traceback
 import shutil 
+import time 
 from typing import List
 
 from fastapi import status as http_status, UploadFile, File
@@ -42,9 +43,11 @@ def add_new_vton(vton_pydantic: VtonPydantic,  files: List[UploadFile]):
                 shutil.copyfileobj(files[0].file, buffer)
             with open(os.path.join(mask_image_path, image_name), "wb") as buffer:
                 shutil.copyfileobj(files[1].file, buffer)
-            
-            a = {"oke":"oke"}
-            return a 
+            result = {}
+            result["result_image"] = os.path.join("http://localhost:5111/results/", "Screenshot 2023-05-25 105711.png")
+            time.sleep(15)
+            return ServiceResult(result)
+        
             # # call rabbit mq 
             # massage = "{},{},{}".format(vton_pydantic.user_id,vton_pydantic.image_folder_dir,vton_pydantic.color)
             # response = rpc_client.call(massage)

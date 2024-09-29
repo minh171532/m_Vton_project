@@ -7,17 +7,14 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.staticfiles import StaticFiles
 from starlette.responses import FileResponse
 
-# # init database table here. 
+# init database table here. 
 from app.database import engine, Base
-# from app.database import engine
-# from app.models import base 
-
-from app.init_db import init_database_admin_item_item_store
-
-# base.Base.metadata.create_all(bind=engine)
+# from app.init_db import init_database_admin_item_item_store
+# TODO check update database 
+# Base.metadata.drop_all(bind=engine) 
 Base.metadata.create_all(bind=engine)
 
-init_database_admin_item_item_store()
+# init_database_admin_item_item_store()
 # 
 
 from config import APP_PATH, LOGGER, CONFIG
